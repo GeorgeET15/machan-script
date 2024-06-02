@@ -13,10 +13,7 @@ export class Environment {
     this.parent = parentENV;
     this.variables = new Map();
     this.constants = new Set();
-
-    if (global) {
-      setUpScope(this);
-    }
+    setUpScope(this);
   }
 
   declareVar(varname, value, constant) {

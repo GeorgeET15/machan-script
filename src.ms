@@ -28,3 +28,4 @@ ithu q = 100 aanu
 
 ipo ( obj . x != obj . y ) anengi { q = q + 50 para ( q ) ; } alengi { q = q + 100 para ( q ) ; } 
 
+para ( true ) ;
