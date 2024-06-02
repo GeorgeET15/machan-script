@@ -31,21 +31,18 @@ export const evaluate_ipo_statement = (node, env) => {
   }
 };
 
+export const evaluate_while_statement = (node, env) => {
+  let result = MK_NULL();
+  while (evaluate(node.condition, env).value) {
+    result = evaluate_block(node.body, env);
+  }
+  return result;
+};
+
 const evaluate_block = (block, env) => {
   let result = MK_NULL();
   for (const statement of block) {
     result = evaluate(statement, env);
   }
-  return result;
-};
-
-// Implement evaluate_while_statement function to execute while loops
-export const evaluate_while_statement = (node, env) => {
-  let result = MK_NULL();
-
-  while (evaluate(node.condition, env).value) {
-    result = evaluate(node.body, env);
-  }
-
   return result;
 };

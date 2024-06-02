@@ -48,6 +48,7 @@ export const TokenType = {
 };
 
 const keywords = {
+  machane: TokenType.KEYWORD,
   ithu: TokenType.KEYWORD,
   aanu: TokenType.KEYWORD,
   const: TokenType.KEYWORD,
@@ -57,7 +58,8 @@ const keywords = {
   ipo: TokenType.KEYWORD,
   anengi: TokenType.KEYWORD,
   alengi: TokenType.KEYWORD,
-  while: TokenType.KEYWORD,
+  avane: TokenType.KEYWORD,
+  vare: TokenType.KEYWORD,
 };
 
 export const tokenize = (sourceCode) => {

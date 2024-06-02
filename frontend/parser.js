@@ -15,6 +15,7 @@ import {
   NativeFunctionCall,
   ArrayLiteral,
   IfStatement,
+  WhileStatement,
 } from "./ast.js";
 
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -86,7 +87,7 @@ export class Parser {
         return this.parse_native_function_call();
       case "ipo":
         return this.parse_ipo_statement(); // Add support for if statements
-      case "while":
+      case "machane":
         return this.parse_while_statement(); // Add support for while loops
 
       default:
@@ -128,18 +129,16 @@ export class Parser {
 
   // Implement parse_while_statement method to parse while loops
   parse_while_statement() {
-    this.expect(TokenType.KEYWORD, "Expected 'while' keyword");
+    this.expect(TokenType.KEYWORD, "Expected 'machane' keyword");
     this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'while'");
     const condition = this.parse_expression();
     this.expect(TokenType.RIGHT_PAREN, "Expected ')' after while condition");
+    this.expect(TokenType.KEYWORD, "Expected 'avane' keyword");
+    this.expect(TokenType.KEYWORD, "Expected 'vare' keyword");
 
-    const body = this.parse_statement();
+    const body = this.parse_block();
 
-    return {
-      type: "WhileStatement",
-      condition,
-      body,
-    };
+    return new WhileStatement(condition, body);
   }
 
   parse_var_declaration() {
