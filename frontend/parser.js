@@ -85,7 +85,7 @@ export class Parser {
       case "cheruthu":
         return this.parse_native_function_call();
       case "ipo":
-        return this.parse_if_statement(); // Add support for if statements
+        return this.parse_ipo_statement(); // Add support for if statements
       case "while":
         return this.parse_while_statement(); // Add support for while loops
 
@@ -94,7 +94,7 @@ export class Parser {
     }
   }
 
-  parse_if_statement() {
+  parse_ipo_statement() {
     this.expect(TokenType.KEYWORD, "Expected 'ipo' keyword.");
     this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'if' keyword.");
     const condition = this.parse_expression();
@@ -114,15 +114,16 @@ export class Parser {
 
   parse_block() {
     this.expect(TokenType.LEFT_BRACE, "Expected '{' to start block.");
-    let statement;
+    const statements = [];
 
     while (this.at().type !== TokenType.RIGHT_BRACE && this.not_eof()) {
-      statement = this.parse_statement();
+      const statement = this.parse_statement();
+      statements.push(statement);
     }
 
     this.expect(TokenType.RIGHT_BRACE, "Expected '}' to end block.");
 
-    return statement;
+    return statements;
   }
 
   // Implement parse_while_statement method to parse while loops

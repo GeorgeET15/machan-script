@@ -19,9 +19,9 @@ export const evaluate_ipo_statement = (node, env) => {
 
   if (conditionValue.type === "boolean") {
     if (conditionValue.value) {
-      return evaluate(node.thenBlock, env);
+      return evaluate_block(node.thenBlock, env);
     } else if (node.elseBlock) {
-      return evaluate(node.elseBlock, env);
+      return evaluate_block(node.elseBlock, env);
     } else {
       return MK_NULL(); // Return null if there's no else block
     }
@@ -29,6 +29,14 @@ export const evaluate_ipo_statement = (node, env) => {
     console.error("Condition must be a boolean value.");
     return MK_NULL();
   }
+};
+
+const evaluate_block = (block, env) => {
+  let result = MK_NULL();
+  for (const statement of block) {
+    result = evaluate(statement, env);
+  }
+  return result;
 };
 
 // Implement evaluate_while_statement function to execute while loops
