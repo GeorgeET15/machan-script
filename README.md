@@ -69,5 +69,5 @@ ipo ( x < 10 ) anengi { para( "x is less than 10" ) ; } alengi { para( "x is gre
 ```usage
 ithu a = 1 aanu
 
-machane ( a == 5 ) avane vare { para(a); a = a + 1 }
+machane ( a == 5 ) avane vare { para ( a ) ; a = a + 1 }
 ```
