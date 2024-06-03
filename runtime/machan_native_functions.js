@@ -76,7 +76,7 @@ export const cheruthu_native_function = (args, env) => {
   return new NumberVal(smallest);
 };
 
-export const input_native_function = (args, env) => {
+export const input_eduku_native_function = (args, env) => {
   if (args.length !== 2) {
     console.error("input function expects exactly 2 arguments.");
     return MK_NULL();
@@ -105,7 +105,7 @@ const nativeFunctionRegistry = {
   para: para_native_function,
   veluthu: veluthu_native_function,
   cheruthu: cheruthu_native_function,
-  input: input_native_function,
+  input_eduku: input_eduku_native_function,
 };
 
 // Function to call a native function

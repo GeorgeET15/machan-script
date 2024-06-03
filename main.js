@@ -1,7 +1,7 @@
 import { Parser } from "./frontend/parser.js";
 import { evaluate } from "./runtime/interpreter.js";
 import { Environment } from "./runtime/environment.js";
-import { MK_NULL, MK_NUMBER, MK_BOOL } from "./runtime/values.js";
+import { MK_NUMBER } from "./runtime/values.js";
 import chalk from "chalk";
 
 // Define the path to the input file

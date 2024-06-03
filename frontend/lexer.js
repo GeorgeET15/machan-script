@@ -60,7 +60,8 @@ const keywords = {
   alengi: TokenType.KEYWORD,
   avane: TokenType.KEYWORD,
   vare: TokenType.KEYWORD,
-  input: TokenType.KEYWORD,
+  enit: TokenType.KEYWORD,
+  input_eduku: TokenType.KEYWORD,
   while: TokenType.KEYWORD,
   for: TokenType.KEYWORD,
 };
