@@ -144,3 +144,13 @@ export class WhileStatement extends Statement {
     this.body = body;
   }
 }
+
+export class ForStatement extends Statement {
+  constructor(init, condition, increment, body) {
+    super("ForStatement");
+    this.init = init;
+    this.condition = condition;
+    this.increment = increment;
+    this.body = body;
+  }
+}

@@ -13,6 +13,7 @@ import {
   evaluate_var_declaration,
   evaluate_ipo_statement,
   evaluate_while_statement,
+  evaluate_for_statement,
 } from "./eval/statements.js";
 
 import { call_native_function } from "./machan_native_functions.js";
@@ -48,6 +49,8 @@ export const evaluate = (astNode, env) => {
       return evaluate_ipo_statement(astNode, env); // Add support for IfStatement
     case "WhileStatement":
       return evaluate_while_statement(astNode, env); // Add support for WhileStatement
+    case "ForStatement": // Add support for ForStatement
+      return evaluate_for_statement(astNode, env);
 
     default:
       console.error(

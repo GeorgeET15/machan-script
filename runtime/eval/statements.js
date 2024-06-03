@@ -46,3 +46,14 @@ const evaluate_block = (block, env) => {
   }
   return result;
 };
+
+export const evaluate_for_statement = (node, env) => {
+  evaluate(node.init, env);
+
+  while (evaluate(node.condition, env).value) {
+    evaluate_block(node.body, env);
+    evaluate(node.increment, env);
+  }
+
+  return MK_NULL();
+};

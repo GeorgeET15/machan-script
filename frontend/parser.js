@@ -16,6 +16,7 @@ import {
   ArrayLiteral,
   IfStatement,
   WhileStatement,
+  ForStatement,
 } from "./ast.js";
 
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -90,10 +91,30 @@ export class Parser {
         return this.parse_ipo_statement(); // Add support for if statements
       case "machane":
         return this.parse_while_statement(); // Add support for while loops
+      case "for":
+        return this.parse_for_statement();
 
       default:
         throw new Error("Unexpected keyword statement");
     }
+  }
+
+  parse_for_statement() {
+    this.expect(TokenType.KEYWORD, "Expected 'for' keyword.");
+    this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'for' keyword.");
+
+    const init = this.parse_var_declaration();
+    this.expect(TokenType.COLON, "Expected ';' after initialization.");
+
+    const condition = this.parse_expression();
+    this.expect(TokenType.COLON, "Expected ';' after condition.");
+
+    const increment = this.parse_expression();
+    this.expect(TokenType.RIGHT_PAREN, "Expected ')' after increment.");
+
+    const body = this.parse_block();
+
+    return new ForStatement(init, condition, increment, body);
   }
 
   parse_ipo_statement() {

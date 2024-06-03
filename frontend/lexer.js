@@ -61,6 +61,8 @@ const keywords = {
   avane: TokenType.KEYWORD,
   vare: TokenType.KEYWORD,
   input: TokenType.KEYWORD,
+  while: TokenType.KEYWORD,
+  for: TokenType.KEYWORD,
 };
 
 export const tokenize = (sourceCode) => {
