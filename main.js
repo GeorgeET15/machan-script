@@ -11,9 +11,6 @@ const repl = async () => {
   const parser = new Parser();
   const env = new Environment();
 
-  // Corrected the declaration syntax
-  env.declareVar("x", MK_NUMBER(100));
-
   console.log(chalk.cyanBright("\nMachanScript V0.1"));
 
   // Read the input from the text file
