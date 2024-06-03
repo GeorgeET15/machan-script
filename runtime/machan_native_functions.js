@@ -1,5 +1,5 @@
 // Import necessary modules and classes
-import { MK_NULL, NumberVal } from "./values.js";
+import { MK_NULL, NumberVal, StringVal } from "./values.js";
 import { evaluate } from "./interpreter.js";
 
 // Define the para function
@@ -76,10 +76,36 @@ export const cheruthu_native_function = (args, env) => {
   return new NumberVal(smallest);
 };
 
+export const input_native_function = (args, env) => {
+  if (args.length !== 2) {
+    console.error("input function expects exactly 2 arguments.");
+    return MK_NULL();
+  }
+
+  const varName = args[0].value;
+  const promptMessage = args[1].value;
+
+  const value = prompt(promptMessage);
+  let evaluatedValue;
+  if (!isNaN(value)) {
+    evaluatedValue = new NumberVal(Number(value));
+  } else {
+    evaluatedValue = new StringVal(value);
+  }
+
+  for (const statement of args) {
+    if (statement.kind === "Identifier") {
+      let varName = statement.symbol;
+      return env.declareVar(varName, evaluatedValue, false);
+    }
+  }
+};
+
 const nativeFunctionRegistry = {
   para: para_native_function,
   veluthu: veluthu_native_function,
   cheruthu: cheruthu_native_function,
+  input: input_native_function,
 };
 
 // Function to call a native function

@@ -84,6 +84,7 @@ export class Parser {
       case "para":
       case "veluthu":
       case "cheruthu":
+      case "input":
         return this.parse_native_function_call();
       case "ipo":
         return this.parse_ipo_statement(); // Add support for if statements
@@ -97,7 +98,7 @@ export class Parser {
 
   parse_ipo_statement() {
     this.expect(TokenType.KEYWORD, "Expected 'ipo' keyword.");
-    this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'if' keyword.");
+    this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'ipo' keyword.");
     const condition = this.parse_expression();
     this.expect(TokenType.RIGHT_PAREN, "Expected ')' after condition.");
     this.expect(TokenType.KEYWORD, "Expected 'anengi' keyword.");

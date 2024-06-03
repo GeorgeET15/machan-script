@@ -60,6 +60,7 @@ const keywords = {
   alengi: TokenType.KEYWORD,
   avane: TokenType.KEYWORD,
   vare: TokenType.KEYWORD,
+  input: TokenType.KEYWORD,
 };
 
 export const tokenize = (sourceCode) => {
