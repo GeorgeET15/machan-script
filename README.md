@@ -10,9 +10,9 @@ To start using MachanScript, follow these simple steps:
 
 2. **Syntax Overview**:
 
-   - `let`: Used to declare variables.
-   - `const`: Used to declare constant variables.
-   - `let obj = { x : 100 , y : 200 , };`: Example of creating objects.
+   - `ithu varName = value aanu`: Used to declare variables.
+   - `ithu const variable = value aanu`: Used to declare constant variables.
+   - `ithu obj = { x : 100 , y : 200 , } aanu`: Example of creating objects.
    - `obj . x | obj . y`: Accessing object properties.
    - `para () ;`: Native function for printing.
 
@@ -21,14 +21,14 @@ To start using MachanScript, follow these simple steps:
    - Variable Declaration:
 
      ```
-     let variableName = number | boolean | string ;
-     const constantName = number | boolean | string ;
+     ithu variableName = value aanu
+     ithu const constantName = value aanu
      ```
 
    - Object Creation:
 
      ```
-     let obj = { x : 100 , y : 200 , } ;
+     ithu obj = { x : 100 , y : 200 , } aanu
      ```
 
    - Printing:
@@ -37,9 +37,38 @@ To start using MachanScript, follow these simple steps:
      para ( obj . x + obj . y ) ;
      ```
 
-4. **Usage**:
-   - Simply include the MachanScript code in your JavaScript files or directly run it in your browser's console.
-
 ## Native Functions
 
-MachanScript provides a native function `para()` for printing output. Example usage:
+MachanScript provides the following native functions:
+
+- `para( message ) ;`: Prints the message to the console.
+- `input( varName , prompt ) ;`: Prompts the user to enter a value and assigns it to the variable specified by `varName`.
+- `veluthu( arg1 , arg2 ) ;`: Returns the larger of the two arguments.
+- `cheruthu( arg1 , arg2 ) ;`: Returns the smaller of the two arguments.
+
+## Control Statements
+
+MachanScript supports the following control statements:
+
+- `ipo`: Used for conditional execution. Followed by a condition and a block of code to execute if the condition is true.
+- `anengi`: Marks the beginning of the block of code to execute if the condition in an `ipo` statement is true.
+- `alengi`: Marks the beginning of the block of code to execute if the condition in an `ipo` statement is false.
+- `machane`: Used to create while loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
+- `avane` and `vare`: Marks the beginning and end of the block of code to execute in a `machane` loop.
+
+## Examples
+
+### Conditional Execution (ipo, anengi, alengi)
+
+```usage
+ithu x = 5 aanu
+ipo (x < 10) anengi { para( "x is less than 10" ) ; } alengi { para( "x is greater than or equal to 10" ) ; }
+
+### While Loop (machane, avane, vare)
+
+```usage
+
+ithu a = 1 aanu
+
+machane (a == 5) avane vare { para(a); a = a + 1 }
+
