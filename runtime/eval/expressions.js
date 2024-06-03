@@ -11,7 +11,8 @@ const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
     case "*":
       return new NumberVal(lhs.value * rhs.value);
     case "/":
-      return new NumberVal(lhs.value / rhs.value);
+      // Perform integer division using Math.floor()
+      return new NumberVal(Math.floor(lhs.value / rhs.value));
     case "%":
       return new NumberVal(lhs.value % rhs.value);
     default:
