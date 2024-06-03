@@ -60,13 +60,15 @@ MachanScript supports the following control statements:
 
 ### Conditional Execution (ipo, anengi, alengi)
 
-```usage
+- usage:
+```
 ithu x = 5 aanu
 ipo ( x < 10 ) anengi { para( "x is less than 10" ) ; } alengi { para( "x is greater than or equal to 10" ) ; }
 ```
 ### While Loop (machane, avane, vare)
 
-```usage
+- usage:
+```
 ithu a = 1 aanu
 
 machane ( a == 5 ) avane vare { para ( a ) ; a = a + 1 }
