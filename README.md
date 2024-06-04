@@ -60,6 +60,8 @@ MachanScript supports the following control statements:
 - `alengi`: Marks the beginning of the block of code to execute if the condition in an `ipo` statement is false.
 - `machane`: Used to create while loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
 - `avane` and `vare`: Marks the beginning and end of the block of code to execute in a `machane` loop.
+- `for machane`: Used to create for loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
+- `enitu`: Marks the beginning block of code to execute in a `for machane` loop.
 
 ## Examples 😉
 
