@@ -4,14 +4,15 @@ import { evaluate } from "./interpreter.js";
 import ps from "prompt-sync";
 
 // Define the para function
-export const para_native_function = (args, env) => {
+const para_native_function = (args, env) => {
+  let output = "";
   for (const arg of args) {
     const evaluatedArg = evaluate(arg, env);
     switch (evaluatedArg.type) {
       case "number":
       case "string":
       case "boolean":
-        console.log(evaluatedArg.value);
+        output += evaluatedArg.value;
         break;
       case "array":
         if (
@@ -20,22 +21,23 @@ export const para_native_function = (args, env) => {
         ) {
           const index = Math.floor(arg.property.value);
           if (index >= 0 && index < evaluatedArg.elements.length) {
-            console.log(evaluatedArg.elements[index]);
+            output += evaluatedArg.elements[index];
           } else {
-            console.error(`Index '${index}' out of bounds for array.`);
+            output += `Index '${index}' out of bounds for array.`;
           }
         } else {
           const values = evaluatedArg.elements
             .map((element) => element.value)
             .join(", ");
-          console.log(`[${values}]`);
+          output += `[${values}]`;
         }
         break;
       default:
-        console.error("Unsupported argument type for para function.");
+        output += "Unsupported argument type for para function.";
         break;
     }
   }
+  console.log(output);
   return MK_NULL();
 };
 
