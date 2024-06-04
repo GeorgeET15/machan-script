@@ -17,7 +17,7 @@ To start using MachanScript, follow these simple steps:
    - `ithu varName = value aanu` : Used to declare variables.
    - `ithu const variable = value aanu` : Used to declare constant variables.
    - `ithu obj = { x : 100 , y : 200 , } aanu` : Example of creating objects.
-   - `obj.x | obj.y`: Accessing object properties.
+   - `obj . x | obj . y`: Accessing object properties.
    - `para() ;`: Native function for printing.
 
 3. **Examples**:
@@ -39,17 +39,17 @@ To start using MachanScript, follow these simple steps:
    - Printing:
      ```machan
      para ( "Hello World!!" ) ;
-     para ( obj.x + obj.y ) ;
+     para ( obj . x + obj . y ) ;
      ```
 
 ## Native Functions
 
 MachanScript provides the following native functions:
 
-- `para( message ) ;` : Prints the message to the console.
-- `input( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
-- `veluthu( arg1 , arg2 ) ;` : Returns the larger of the two arguments.
-- `cheruthu( arg1 , arg2 ) ;` : Returns the smaller of the two arguments.
+- `para ( message ) ;` : Prints the message to the console.
+- `input ( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
+- `veluthu ( arg1 , arg2 ) ;` : Returns the larger of the two arguments.
+- `cheruthu ( arg1 , arg2 ) ;` : Returns the smaller of the two arguments.
 
 ## Control Statements
 
@@ -90,7 +90,7 @@ machane ( a == 5 ) avane vare { para ( a ) ; a = a + 1 }
 - Usage:
 
 ```machan
-for ( ithu i = 0 aanu : i < 5 : i = i + 1 ) enit { para ( i ) ; }
+for machane ( ithu i = 0 aanu : i < 5 : i = i + 1 ) enit { para ( i ) ; }
 ```
 
 ## Running Code 🚀
