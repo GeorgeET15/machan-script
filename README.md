@@ -14,9 +14,9 @@ To start using MachanScript, follow these simple steps:
 
 2. **Syntax Overview**:
 
-   - `ithu varName = value aanu`: Used to declare variables.
-   - `ithu const variable = value aanu`: Used to declare constant variables.
-   - `ithu obj = { x : 100 , y : 200 , } aanu`: Example of creating objects.
+   - `ithu varName = value aanu` : Used to declare variables.
+   - `ithu const variable = value aanu` : Used to declare constant variables.
+   - `ithu obj = { x : 100 , y : 200 , } aanu` : Example of creating objects.
    - `obj.x | obj.y`: Accessing object properties.
    - `para() ;`: Native function for printing.
 
@@ -65,7 +65,7 @@ MachanScript supports the following control statements:
 
 ## Examples 😉
 
-### Conditional Execution (`ipo`, `anengi`, `alengi`)
+### Conditional Execution ( `ipo`, `anengi`, `alengi` )
 
 - Usage:
 
@@ -75,7 +75,7 @@ ithu x = 5 aanu
 ipo ( x < 10 ) anengi { para ( " x is less than 10 " ) ; } alengi { para ( "x is greater than or equal to 10" ) ; }
 ```
 
-### While Loop (`machane`, `avane`, `vare`)
+### While Loop ( `machane`, `avane`, `vare` )
 
 - Usage:
 
@@ -85,7 +85,7 @@ ithu a = 1 aanu
 machane ( a == 5 ) avane vare { para ( a ) ; a = a + 1 }
 ```
 
-### For Loop (`for`, `machane`, `enit`)
+### For Loop ( `for`, `machane`, `enit` )
 
 - Usage:
 
