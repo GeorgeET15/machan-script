@@ -9,7 +9,7 @@ To start using MachanScript, follow these simple steps:
 1. **Installation**: Install MachanScript globally using npm:
 
    ```sh
-   npm i -g machan-script.
+   npm i -g machan-script
    ```
 
 2. **Syntax Overview**:
