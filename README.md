@@ -61,7 +61,7 @@ MachanScript supports the following control statements:
 - `machane`: Used to create while loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
 - `avane` and `vare`: Marks the beginning and end of the block of code to execute in a `machane` loop.
 - `for machane`: Used to create for loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
-- `enitu`: Marks the beginning block of code to execute in a `for machane` loop.
+- `enit`: Marks the beginning block of code to execute in a `for machane` loop.
 
 ## Examples 😉
 
@@ -114,7 +114,7 @@ MachanScript also has a VSCode extension for syntax highlighting. You can instal
 - Native functions for printing, input, and basic arithmetic operations.
 - Support for conditional execution with `ipo`, `anengi`, `alengi`.
 - Support for `while` Loops with `machane`, `avane`, `vare`.
-- Support for `for` loops with `for`, `enitu`, `para`.
+- Support for `for` loops with `for`, `enit`, `para`.
 
 ## Author 😁
 
