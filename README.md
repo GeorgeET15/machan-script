@@ -103,9 +103,9 @@ machane filename.ms
 
 ## VSCode Extension
 
-MachanScript also has a VSCode extension for syntax highlighting. You can install it from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=georgeet15.machan-script).
+MachanScript also has a [VSCode extension](https://marketplace.visualstudio.com/items?itemName=GeorgeET15.machanscript) for syntax highlighting. .
 
-## Version History
+## Version History 📝
 
 ### v0.1 (June-2024)
 
