@@ -1,0 +1,32 @@
+{
+  "name": "machanscript",
+  "version": "1.0.0",
+  "description": "MachanScript is a simple scripting language designed for ease of use and readability. It offers basic functionality for variable declaration, object creation, and native function invocation.",
+  "main": "main.js",
+  "type": "module",
+  "bin": {
+    "machane": "deno run -A main.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "GeorgeET15",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.23",
+    "prompt-sync": "^4.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeorgeET15/machan-script.git"
+  },
+  "keywords": [
+    "machanscript",
+    "machan-script"
+  ],
+  "bugs": {
+    "url": "https://github.com/GeorgeET15/machan-script/issues"
+  },
+  "homepage": "https://github.com/GeorgeET15/machan-script#readme"
+}

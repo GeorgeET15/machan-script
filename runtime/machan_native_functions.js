@@ -1,6 +1,7 @@
 // Import necessary modules and classes
 import { MK_NULL, NumberVal, StringVal } from "./values.js";
 import { evaluate } from "./interpreter.js";
+import ps from "prompt-sync";
 
 // Define the para function
 export const para_native_function = (args, env) => {
@@ -84,10 +85,12 @@ export const input_eduku_native_function = (args, env) => {
 
   const varName = args[0].value;
   const promptMessage = args[1].value;
+  const prompt = ps();
 
   const value = prompt(promptMessage);
   let evaluatedValue;
   if (!isNaN(value)) {
+    console.log(value);
     evaluatedValue = new NumberVal(Number(value));
   } else {
     evaluatedValue = new StringVal(value);

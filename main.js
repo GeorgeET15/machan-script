@@ -1,26 +1,24 @@
+import fs from "fs/promises";
+import inquirer from "inquirer";
 import { Parser } from "./frontend/parser.js";
 import { evaluate } from "./runtime/interpreter.js";
 import { Environment } from "./runtime/environment.js";
+import chalk from "chalk";
 
-// Define the path to the input file
-const filePath = "./src.ms"; // Update this to the path of your input file
-
-const repl = async () => {
+const machan_script_cli = async (filePath) => {
   const parser = new Parser();
   const env = new Environment();
 
-  console.log("\nMachanScript V0.1");
-
-  // Read the input from the text file
   try {
-    const input = await Deno.readTextFile(filePath);
+    const input = await fs.readFile(filePath, "utf-8");
     const lines = input.split("\n").filter((line) => line.trim() !== "");
 
-    // Check if the first line is "Start"
+    // Check if the first line is "Machane!!"
     if (lines.length > 0 && lines[0].trim() !== "Machane!!") {
-      console.log("Starting something special...");
-      lines.shift();
-      return;
+      console.log(
+        chalk.red("The first line should be ") + chalk.yellow("Machane!!")
+      );
+      process.exit(1);
     } else {
       lines.shift();
     }
@@ -28,15 +26,42 @@ const repl = async () => {
     for (const line of lines) {
       try {
         const program = parser.produceAST({ sourceCode: line });
-        evaluate(program, env);
-        // console.log(result); // Print the evaluation result
+        await evaluate(program, env);
       } catch (error) {
-        console.error(error);
+        console.error(chalk.red("Error processing line:"), error.message);
       }
     }
   } catch (error) {
-    console.error("Failed to read the input file:", error);
+    console.error(chalk.red("Failed to read the input file:"), error.message);
   }
 };
 
-repl();
+const getFilePath = async () => {
+  const answers = await inquirer.prompt([
+    {
+      type: "input",
+      name: "filePath",
+      message: "Machane file name adiku:",
+      default: "./src.ms",
+      validate: (input) => {
+        if (!input) {
+          return "Please enter a file path.";
+        }
+        return true;
+      },
+    },
+  ]);
+  return answers.filePath;
+};
+
+const fileNameArg = process.argv[2];
+
+if (fileNameArg) {
+  machan_script_cli(fileNameArg);
+} else {
+  console.log(chalk.bold.magenta("\nWelcome to MachanScript V0.1\n"));
+  (async () => {
+    const filePath = await getFilePath();
+    machan_script_cli(filePath);
+  })();
+}

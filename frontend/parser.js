@@ -50,7 +50,7 @@ export class Parser {
         " - Expecting: ",
         type
       );
-      Deno.exit(1);
+      process.exit(1);
     }
 
     return prev;
@@ -457,7 +457,7 @@ export class Parser {
 
       default:
         console.log("Unexpected token found while parsing!");
-        Deno.exit(1);
+        process.exit(1);
     }
   }
 }
