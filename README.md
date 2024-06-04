@@ -17,8 +17,8 @@ To start using MachanScript, follow these simple steps:
    - `ithu varName = value aanu` : Used to declare variables.
    - `ithu const variable = value aanu` : Used to declare constant variables.
    - `ithu obj = { x : 100 , y : 200 , } aanu` : Example of creating objects.
-   - `obj . x | obj . y`: Accessing object properties.
-   - `para() ;`: Native function for printing.
+   - `obj . x | obj . y` : Accessing object properties.
+   - `para () ;` : Native function for printing.
 
 3. **Examples**:
 
@@ -55,13 +55,13 @@ MachanScript provides the following native functions:
 
 MachanScript supports the following control statements:
 
-- `ipo`: Used for conditional execution. Followed by a condition and a block of code to execute if the condition is true.
-- `anengi`: Marks the beginning of the block of code to execute if the condition in an `ipo` statement is true.
-- `alengi`: Marks the beginning of the block of code to execute if the condition in an `ipo` statement is false.
-- `machane`: Used to create while loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
-- `avane` and `vare`: Marks the beginning and end of the block of code to execute in a `machane` loop.
-- `for machane`: Used to create for loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
-- `enit`: Marks the beginning block of code to execute in a `for machane` loop.
+- `ipo` : Used for conditional execution. Followed by a condition and a block of code to execute if the condition is true.
+- `anengi` : Marks the beginning of the block of code to execute if the condition in an `ipo` statement is true.
+- `alengi` : Marks the beginning of the block of code to execute if the condition in an `ipo` statement is false.
+- `machane` : Used to create while loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
+- `avane` and `vare` : Marks the beginning and end of the block of code to execute in a `machane` loop.
+- `for machane` : Used to create for loops. Followed by a condition and a block of code to execute repeatedly as long as the condition is true.
+- `enit` : Marks the beginning block of code to execute in a `for machane` loop.
 
 ## Examples 😉
 
