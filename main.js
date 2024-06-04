@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from "fs/promises";
 import inquirer from "inquirer";
 import { Parser } from "./frontend/parser.js";
