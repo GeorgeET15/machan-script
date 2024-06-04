@@ -53,15 +53,16 @@ const getFilePath = async () => {
   ]);
   return answers.filePath;
 };
-
 const fileNameArg = process.argv[2];
 
 if (fileNameArg) {
   machan_script_cli(fileNameArg);
 } else {
   console.log(chalk.bold.magenta("\nWelcome to MachanScript V0.1\n"));
+
   (async () => {
     const filePath = await getFilePath();
+    console.log("\n");
     machan_script_cli(filePath);
   })();
 }

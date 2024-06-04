@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import {
   Statement,
   Program,
@@ -44,11 +45,11 @@ export class Parser {
 
     if (!prev || prev.type !== type) {
       console.error(
-        "Parser Error:\n",
+        chalk.red("Parser Error:\n"),
         err_message,
         prev,
         " - Expecting: ",
-        type
+        chalk.green(type)
       );
       process.exit(1);
     }
@@ -95,7 +96,11 @@ export class Parser {
         return this.parse_for_statement();
 
       default:
-        throw new Error("Unexpected keyword statement");
+        console.error(
+          chalk.red("Machane pani kitti ") +
+            chalk.yellow("Unexpected keyword statement")
+        );
+        process.exit(1);
     }
   }
 
@@ -456,7 +461,10 @@ export class Parser {
         return value;
 
       default:
-        console.log("Unexpected token found while parsing!");
+        console.log(
+          "Machane pani kitti " +
+            chalk.yellow("Unexpected token found while parsing!")
+        );
         process.exit(1);
     }
   }

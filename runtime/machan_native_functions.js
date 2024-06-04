@@ -90,7 +90,6 @@ export const input_eduku_native_function = (args, env) => {
   const value = prompt(promptMessage);
   let evaluatedValue;
   if (!isNaN(value)) {
-    console.log(value);
     evaluatedValue = new NumberVal(Number(value));
   } else {
     evaluatedValue = new StringVal(value);

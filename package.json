@@ -1,11 +1,11 @@
 {
-  "name": "machanscript",
+  "name": "machan-script",
   "version": "1.0.0",
-  "description": "MachanScript is a simple scripting language designed for ease of use and readability. It offers basic functionality for variable declaration, object creation, and native function invocation.",
+  "description": "MachanScript is a lightweight programming language written in Javascript.",
   "main": "main.js",
   "type": "module",
   "bin": {
-    "machane": "deno run -A main.js"
+    "machane": "main.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
