@@ -46,10 +46,10 @@ To start using MachanScript, follow these simple steps:
 
 MachanScript provides the following native functions:
 
-- `para( message ) ;`: Prints the message to the console.
-- `input( varName , prompt ) ;`: Prompts the user to enter a value and assigns it to the variable specified by `varName`.
-- `veluthu( arg1 , arg2 ) ;`: Returns the larger of the two arguments.
-- `cheruthu( arg1 , arg2 ) ;`: Returns the smaller of the two arguments.
+- `para( message ) ;` : Prints the message to the console.
+- `input( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
+- `veluthu( arg1 , arg2 ) ;` : Returns the larger of the two arguments.
+- `cheruthu( arg1 , arg2 ) ;` : Returns the smaller of the two arguments.
 
 ## Control Statements
 
