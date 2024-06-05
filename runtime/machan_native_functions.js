@@ -1,4 +1,3 @@
-// Import necessary modules and classes
 import { MK_NULL, NumberVal, StringVal } from "./values.js";
 import { evaluate } from "./interpreter.js";
 import ps from "prompt-sync";
@@ -42,41 +41,71 @@ const para_native_function = (args, env) => {
 };
 
 export const veluthu_native_function = (args, env) => {
-  if (args.length !== 2) {
-    console.error("veluthu function expects exactly 2 arguments.");
+  if (args.length < 2) {
+    console.error("veluthu function expects at least 2 arguments.");
     return MK_NULL();
   }
 
-  const arg1 = evaluate(args[0], env);
-  const arg2 = evaluate(args[1], env);
+  const varName = args.pop().symbol; // Get the variable name from the last argument
+  const numbers = [];
+  args.forEach((arg) => {
+    const evaluatedArg = evaluate(arg, env);
+    if (evaluatedArg.type === "number") {
+      numbers.push(evaluatedArg.value);
+    } else if (evaluatedArg.type === "array") {
+      evaluatedArg.elements.forEach((element) => {
+        if (element.type === "number") {
+          numbers.push(element.value);
+        }
+      });
+    }
+  });
 
-  if (arg1.type !== "number" || arg2.type !== "number") {
-    console.error("Both arguments to veluthu must be numbers.");
+  if (numbers.length === 0) {
+    console.error(
+      "veluthu function expects at least one number as an argument."
+    );
     return MK_NULL();
   }
 
-  const largest = arg1.value > arg2.value ? arg1.value : arg2.value;
-  console.log(largest);
-  return new NumberVal(largest);
+  const largest = Math.max(...numbers);
+  const largestVal = new NumberVal(largest);
+  env.declareVar(varName, largestVal, false);
+  return largestVal;
 };
 
 export const cheruthu_native_function = (args, env) => {
-  if (args.length !== 2) {
-    console.error("veluthu function expects exactly 2 arguments.");
+  if (args.length < 2) {
+    console.error("cheruthu function expects at least 2 arguments.");
     return MK_NULL();
   }
 
-  const arg1 = evaluate(args[0], env);
-  const arg2 = evaluate(args[1], env);
+  const varName = args.pop().symbol; // Get the variable name from the last argument
+  const numbers = [];
+  args.forEach((arg) => {
+    const evaluatedArg = evaluate(arg, env);
+    if (evaluatedArg.type === "number") {
+      numbers.push(evaluatedArg.value);
+    } else if (evaluatedArg.type === "array") {
+      evaluatedArg.elements.forEach((element) => {
+        if (element.type === "number") {
+          numbers.push(element.value);
+        }
+      });
+    }
+  });
 
-  if (arg1.type !== "number" || arg2.type !== "number") {
-    console.error("Both arguments to veluthu must be numbers.");
+  if (numbers.length === 0) {
+    console.error(
+      "cheruthu function expects at least one number as an argument."
+    );
     return MK_NULL();
   }
 
-  const smallest = arg1.value < arg2.value ? arg1.value : arg2.value;
-  console.log(smallest);
-  return new NumberVal(smallest);
+  const smallest = Math.min(...numbers);
+  const smallestVal = new NumberVal(smallest);
+  env.declareVar(varName, smallestVal, false);
+  return smallestVal;
 };
 
 export const input_eduku_native_function = (args, env) => {

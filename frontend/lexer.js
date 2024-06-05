@@ -12,7 +12,6 @@ export class Token {
 export const TokenType = {
   NUMBER: "Number",
   IDENTIFIER: "Identifier",
-  KEYWORD: "Keyword",
   STRING: "String",
   UNDEFINED: "Undefined",
   START: "Start",
@@ -43,27 +42,28 @@ export const TokenType = {
   COLON: "Colon",
   DOT: "Dot",
 
+  // Keywords
+  MACHANE: "machane",
+  ITHU: "ithu",
+  AANU: "aanu",
+  CONST: "const",
+  PARA: "para",
+  VELUTHU: "veluthu",
+  CHERUTHU: "cheruthu",
+  IPO: "ipo",
+  ANENGI: "anengi",
+  ALENGI: "alengi",
+  AVANE: "avane",
+  VARE: "vare",
+  ENIT: "enit",
+  INPUT_EDUKU: "inputEduku",
+  WHILE: "while",
+  FOR: "for",
+  SWITCH: "switch",
+  ONNUM_ALENGI: "onnum_alengi",
+
   // End of File
   EOF: "EOF",
-};
-
-const keywords = {
-  machane: TokenType.KEYWORD,
-  ithu: TokenType.KEYWORD,
-  aanu: TokenType.KEYWORD,
-  const: TokenType.KEYWORD,
-  para: TokenType.KEYWORD,
-  veluthu: TokenType.KEYWORD,
-  cheruthu: TokenType.KEYWORD,
-  ipo: TokenType.KEYWORD,
-  anengi: TokenType.KEYWORD,
-  alengi: TokenType.KEYWORD,
-  avane: TokenType.KEYWORD,
-  vare: TokenType.KEYWORD,
-  enit: TokenType.KEYWORD,
-  input_eduku: TokenType.KEYWORD,
-  while: TokenType.KEYWORD,
-  for: TokenType.KEYWORD,
 };
 
 export const tokenize = (sourceCode) => {
@@ -75,8 +75,8 @@ export const tokenize = (sourceCode) => {
       tokens.push(new Token(word, TokenType.NUMBER));
     } else if (/^"[^"]*"$/.test(word) || /^'[^']*'$/.test(word)) {
       tokens.push(new Token(word.slice(1, -1), TokenType.STRING));
-    } else if (word.toLowerCase() in keywords) {
-      tokens.push(new Token(word, keywords[word.toLowerCase()]));
+    } else if (word.toUpperCase() in TokenType) {
+      tokens.push(new Token(word, TokenType[word.toUpperCase()]));
     } else if (/^[a-zA-Z_]\w*$/.test(word)) {
       tokens.push(
         new Token(

@@ -154,3 +154,27 @@ export class ForStatement extends Statement {
     this.body = body;
   }
 }
+
+export class SwitchStatement extends Statement {
+  constructor(expression, cases, defaultCase) {
+    super("SwitchStatement");
+    this.expression = expression;
+    this.cases = cases;
+    this.defaultCase = defaultCase;
+  }
+}
+
+export class CaseStatement extends Statement {
+  constructor(value, body) {
+    super("CaseStatement");
+    this.value = value;
+    this.body = body;
+  }
+}
+
+export class DefaultStatement extends Statement {
+  constructor(body) {
+    super("DefaultStatement");
+    this.body = body;
+  }
+}

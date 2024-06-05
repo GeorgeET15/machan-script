@@ -57,3 +57,24 @@ export const evaluate_for_statement = (node, env) => {
 
   return MK_NULL();
 };
+
+export const evaluate_switch_statement = (node, env) => {
+  const switchValue = evaluate(node.expression, env);
+  let result = MK_NULL();
+  let caseMatched = false;
+
+  for (const caseNode of node.cases) {
+    const caseValue = evaluate(caseNode.value, env);
+    if (switchValue.value === caseValue.value) {
+      result = evaluate_block(caseNode.body, env);
+      caseMatched = true;
+      break;
+    }
+  }
+
+  if (!caseMatched && node.defaultCase) {
+    result = evaluate_block(node.defaultCase.body, env);
+  }
+
+  return result;
+};

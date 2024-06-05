@@ -18,6 +18,9 @@ import {
   IfStatement,
   WhileStatement,
   ForStatement,
+  SwitchStatement,
+  CaseStatement,
+  DefaultStatement,
 } from "./ast.js";
 
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -71,42 +74,70 @@ export class Parser {
 
   parse_statement() {
     switch (this.at().type) {
-      case TokenType.KEYWORD:
-        return this.parse_keyword_statement();
+      case TokenType.ITHU:
+      case TokenType.CONST:
+        return this.parse_var_declaration();
+      case TokenType.PARA:
+      case TokenType.VELUTHU:
+      case TokenType.CHERUTHU:
+      case TokenType.INPUT_EDUKU:
+        return this.parse_native_function_call();
+      case TokenType.IPO:
+        return this.parse_ipo_statement(); // Add support for if statements
+      case TokenType.MACHANE:
+        return this.parse_while_statement(); // Add support for while loops
+      case TokenType.FOR:
+        return this.parse_for_statement();
+      case TokenType.SWITCH:
+        return this.parse_switch_statement(); // Add support for switch statements
+
       default:
         return this.parse_expression();
     }
   }
 
-  parse_keyword_statement() {
-    switch (this.at().value) {
-      case "ithu":
-      case "const":
-        return this.parse_var_declaration();
-      case "para":
-      case "veluthu":
-      case "cheruthu":
-      case "input_eduku":
-        return this.parse_native_function_call();
-      case "ipo":
-        return this.parse_ipo_statement(); // Add support for if statements
-      case "machane":
-        return this.parse_while_statement(); // Add support for while loops
-      case "for":
-        return this.parse_for_statement();
+  parse_switch_statement() {
+    this.expect(TokenType.SWITCH, "Expected 'switch' keyword.");
+    this.expect(TokenType.MACHANE, "Expected 'machane' keyword.");
+    const expression = this.parse_expression();
+    this.expect(TokenType.LEFT_BRACE, "Expected '{' after switch expression.");
+    const cases = [];
+    let defaultCase = null;
 
-      default:
-        console.error(
-          chalk.red("Machane pani kitti ") +
-            chalk.yellow("Unexpected keyword statement")
-        );
-        process.exit(1);
+    while (this.not_eof() && this.at().type !== TokenType.RIGHT_BRACE) {
+      switch (this.at().type) {
+        case TokenType.IPO:
+          cases.push(this.parse_case_statement());
+          break;
+        case TokenType.ONNUM_ALENGI:
+          defaultCase = this.parse_default_statement();
+          break;
+        default:
+          throw new Error("Unexpected token inside switch statement.");
+      }
     }
+
+    this.expect(TokenType.RIGHT_BRACE, "Expected '}' to end switch statement.");
+    return new SwitchStatement(expression, cases, defaultCase);
   }
 
+  parse_case_statement() {
+    this.expect(TokenType.IPO, "Expected 'case' keyword.");
+    const value = this.parse_expression();
+    this.expect(TokenType.ANENGI, "Expected 'anengi' after case value.");
+    const body = this.parse_block();
+    return new CaseStatement(value, body);
+  }
+
+  parse_default_statement() {
+    this.expect(TokenType.ONNUM_ALENGI, "Expected 'default' keyword.");
+    this.expect(TokenType.COLON, "Expected ':' after default keyword.");
+    const body = this.parse_block();
+    return new DefaultStatement(body);
+  }
   parse_for_statement() {
-    this.expect(TokenType.KEYWORD, "Expected 'for' keyword.");
-    this.expect(TokenType.KEYWORD, "Expected 'machane' keyword.");
+    this.expect(TokenType.FOR, "Expected 'for' keyword.");
+    this.expect(TokenType.MACHANE, "Expected 'machane' keyword.");
     this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'for' keyword.");
 
     const init = this.parse_var_declaration();
@@ -117,7 +148,7 @@ export class Parser {
 
     const increment = this.parse_expression();
     this.expect(TokenType.RIGHT_PAREN, "Expected ')' after increment.");
-    this.expect(TokenType.KEYWORD, "Expected 'enit' keyword.");
+    this.expect(TokenType.ENIT, "Expected 'enit' keyword.");
 
     const body = this.parse_block();
 
@@ -125,15 +156,15 @@ export class Parser {
   }
 
   parse_ipo_statement() {
-    this.expect(TokenType.KEYWORD, "Expected 'ipo' keyword.");
+    this.expect(TokenType.IPO, "Expected 'ipo' keyword.");
     this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'ipo' keyword.");
     const condition = this.parse_expression();
     this.expect(TokenType.RIGHT_PAREN, "Expected ')' after condition.");
-    this.expect(TokenType.KEYWORD, "Expected 'anengi' keyword.");
+    this.expect(TokenType.ANENGI, "Expected 'anengi' keyword.");
 
     const thenBlock = this.parse_block();
 
-    if (this.at().value === "alengi") {
+    if (this.at().value === TokenType.ALENGI) {
       this.eat(); // Consume the 'else' keyword
       const elseBlock = this.parse_block();
       return new IfStatement(condition, thenBlock, elseBlock);
@@ -158,12 +189,12 @@ export class Parser {
 
   // Implement parse_while_statement method to parse while loops
   parse_while_statement() {
-    this.expect(TokenType.KEYWORD, "Expected 'machane' keyword");
+    this.expect(TokenType.MACHANE, "Expected 'machane' keyword");
     this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'while'");
     const condition = this.parse_expression();
     this.expect(TokenType.RIGHT_PAREN, "Expected ')' after while condition");
-    this.expect(TokenType.KEYWORD, "Expected 'avane' keyword");
-    this.expect(TokenType.KEYWORD, "Expected 'vare' keyword");
+    this.expect(TokenType.AVANE, "Expected 'avane' keyword");
+    this.expect(TokenType.VARE, "Expected 'vare' keyword");
 
     const body = this.parse_block();
 
@@ -171,7 +202,7 @@ export class Parser {
   }
 
   parse_var_declaration() {
-    this.expect(TokenType.KEYWORD, "Expected 'ithu' keyword");
+    this.expect(TokenType.ITHU, "Expected 'ithu' keyword");
 
     let isConstant = false;
 
@@ -185,11 +216,11 @@ export class Parser {
         this.parse_expression()
       );
 
-      this.expect(TokenType.KEYWORD, "Var declaration must end with 'aanu'");
+      this.expect(TokenType.AANU, "Var declaration must end with 'aanu'");
 
       return declaration;
     } else if (
-      this.at().type === TokenType.KEYWORD &&
+      this.at().type === TokenType.ITHU &&
       this.at().value === "const"
     ) {
       this.eat();
@@ -208,7 +239,7 @@ export class Parser {
         this.parse_expression()
       );
 
-      this.expect(TokenType.KEYWORD, "Var declaration must end with 'aanu'");
+      this.expect(TokenType.AANU, "Var declaration must end with 'aanu'");
 
       return declaration;
     } else {
