@@ -5,7 +5,8 @@
   "main": "main.js",
   "type": "module",
   "bin": {
-    "machane": "main.js"
+    "machane": "main.js",
+    "package": "machan_packager.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
