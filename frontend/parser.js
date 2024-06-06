@@ -131,7 +131,6 @@ export class Parser {
 
   parse_default_statement() {
     this.expect(TokenType.ONNUM_ALENGI, "Expected 'default' keyword.");
-    this.expect(TokenType.COLON, "Expected ':' after default keyword.");
     const body = this.parse_block();
     return new DefaultStatement(body);
   }

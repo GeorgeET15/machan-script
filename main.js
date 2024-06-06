@@ -13,28 +13,20 @@ const machan_script_cli = async (filePath) => {
 
   try {
     const input = await fs.readFile(filePath, "utf-8");
-    const lines = input.split("\n").filter((line) => line.trim() !== "");
+    const lines = input.split("\n");
 
-    // Check if the first line is "Machane!!"
-    if (lines.length > 0 && lines[0].trim() !== "Machane!!") {
+    if (lines[0].trim() !== "Machane!!") {
       console.log(
         chalk.red("The first line should be ") + chalk.yellow("Machane!!")
       );
-      process.exit(1);
-    } else {
-      lines.shift();
+      return;
     }
 
-    for (const line of lines) {
-      try {
-        const program = parser.produceAST({ sourceCode: line });
-        await evaluate(program, env);
-      } catch (error) {
-        console.error(chalk.red("Error processing line:"), error.message);
-      }
-    }
+    const scriptContent = lines.slice(1).join("\n");
+    const program = parser.produceAST({ sourceCode: scriptContent });
+    await evaluate(program, env);
   } catch (error) {
-    console.error(chalk.red("Failed to read the input file:"), error.message);
+    console.error(chalk.red("Error processing script:"), error.message);
   }
 };
 
