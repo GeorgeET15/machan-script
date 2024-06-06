@@ -204,46 +204,34 @@ export class Parser {
     this.expect(TokenType.ITHU, "Expected 'ithu' keyword");
 
     let isConstant = false;
+    let identifier;
 
-    if (this.at().type === TokenType.IDENTIFIER) {
-      const identifier = this.eat().value;
-      this.expect(TokenType.EQUAL, "Equals expected in var declaration");
-
-      const declaration = new VarDeclaration(
-        isConstant,
-        identifier,
-        this.parse_expression()
-      );
-
-      this.expect(TokenType.AANU, "Var declaration must end with 'aanu'");
-
-      return declaration;
-    } else if (
-      this.at().type === TokenType.ITHU &&
-      this.at().value === "const"
-    ) {
-      this.eat();
+    if (this.at().type === TokenType.CONST) {
+      this.eat(); // consume the 'const' token
       isConstant = true;
 
-      const identifier = this.expect(
+      identifier = this.expect(
         TokenType.IDENTIFIER,
         "Expected identifier name following 'ithu const'"
       ).value;
-
-      this.expect(TokenType.EQUAL, "Equals expected in var declaration");
-
-      const declaration = new VarDeclaration(
-        isConstant,
-        identifier,
-        this.parse_expression()
-      );
-
-      this.expect(TokenType.AANU, "Var declaration must end with 'aanu'");
-
-      return declaration;
     } else {
-      throw new Error("Unexpected token found while parsing var declaration");
+      identifier = this.expect(
+        TokenType.IDENTIFIER,
+        "Expected identifier name following 'ithu'"
+      ).value;
     }
+
+    this.expect(TokenType.EQUAL, "Equals expected in var declaration");
+
+    const declaration = new VarDeclaration(
+      isConstant,
+      identifier,
+      this.parse_expression()
+    );
+
+    this.expect(TokenType.AANU, "Var declaration must end with 'aanu'");
+
+    return declaration;
   }
 
   parse_expression() {

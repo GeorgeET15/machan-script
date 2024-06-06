@@ -18,7 +18,9 @@ export class Environment {
 
   declareVar(varname, value, constant) {
     if (this.variables.has(varname)) {
-      throw `Cannot declare variable ${varname}. It is already defined.`;
+      throw new Error(
+        `Cannot declare variable ${varname}. It is already defined.`
+      );
     }
     this.variables.set(varname, value);
     if (constant) {
@@ -30,7 +32,7 @@ export class Environment {
   assignVar(varname, value) {
     const env = this.resolve(varname);
     if (env.constants.has(varname)) {
-      throw `${varname} is a const variable, cannot reassign value`;
+      throw new Error(`${varname} is a const variable, cannot reassign value`);
     }
     env.variables.set(varname, value);
     return value;
