@@ -114,7 +114,14 @@ export class Parser {
           defaultCase = this.parse_default_statement();
           break;
         default:
-          throw new Error("Unexpected token inside switch statement.");
+          console.log(
+            chalk.red("Machane pani kitti ") +
+              chalk.yellow(
+                "Unexpected token inside switch statement!",
+                this.at().value
+              )
+          );
+          process.exit(1);
       }
     }
 
@@ -481,7 +488,7 @@ export class Parser {
 
       default:
         console.log(
-          "Machane pani kitti " +
+          chalk.red("Machane pani kitti") +
             chalk.yellow("Unexpected token found while parsing!", tk)
         );
         process.exit(1);

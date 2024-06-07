@@ -1,8 +1,18 @@
 import { NumberVal, MK_NULL, ObjectVal, BoolVal, ArrayVal } from "../values.js";
 import { evaluate } from "../interpreter.js";
 import { Assignment } from "../../frontend/ast.js";
+import chalk from "chalk";
 
 const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
+  if (rhs.value === 0 && operator === "/") {
+    console.log(
+      chalk.red("Ente ponnu ") +
+        chalk.blue("machane ") +
+        chalk.red("zero vechu ara divide cheyane!!")
+    );
+    process.exit(1);
+  }
+
   switch (operator) {
     case "+":
       return new NumberVal(lhs.value + rhs.value);
@@ -121,7 +131,10 @@ export const evaluate_comparison_expression = (compExpr, env) => {
         return MK_NULL();
     }
   } else {
-    console.error("Operands in comparison expression must be numbers.");
+    console.log(
+      chalk.red("Machane pani kitti") +
+        chalk.yellow("Operands in comparison expression must be numbers.")
+    );
     return MK_NULL();
   }
 };

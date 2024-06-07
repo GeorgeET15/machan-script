@@ -1,6 +1,7 @@
-import { MK_NULL, NumberVal, StringVal } from "./values.js";
+import { ArrayVal, MK_NULL, NumberVal, StringVal } from "./values.js";
 import { evaluate } from "./interpreter.js";
 import ps from "prompt-sync";
+import { TokenType } from "../frontend/lexer.js";
 
 // Define the para function
 const para_native_function = (args, env) => {
@@ -114,23 +115,38 @@ export const input_eduku_native_function = (args, env) => {
     return MK_NULL();
   }
 
-  const varName = args[0].value;
+  const varName = args[0].symbol;
   const promptMessage = args[1].value;
   const prompt = ps();
 
   const value = prompt(promptMessage);
-  let evaluatedValue;
-  if (!isNaN(value)) {
-    evaluatedValue = new NumberVal(Number(value));
-  } else {
-    evaluatedValue = new StringVal(value);
-  }
 
-  for (const statement of args) {
-    if (statement.kind === "Identifier") {
-      let varName = statement.symbol;
-      return env.declareVar(varName, evaluatedValue, false);
+  if (value.startsWith("[") && value.endsWith("]")) {
+    const arrayContent = value.substring(1, value.length - 1).trim();
+    const arrayElements = arrayContent.split(",").map((item) => item.trim());
+
+    const evaluatedElements = arrayElements.map((element) => {
+      const numericValue = Number(element);
+      if (!isNaN(numericValue)) {
+        return new NumberVal(numericValue);
+      } else {
+        return new StringVal(element);
+      }
+    });
+
+    const arrayValue = new ArrayVal(evaluatedElements);
+
+    env.declareVar(varName, arrayValue, false);
+  } else {
+    console.log("Regular value parsing...");
+    let evaluatedValue;
+    if (!isNaN(value)) {
+      evaluatedValue = new NumberVal(Number(value));
+    } else {
+      evaluatedValue = new StringVal(value);
     }
+
+    env.declareVar(varName, evaluatedValue, false);
   }
 };
 
