@@ -61,6 +61,7 @@ export const TokenType = {
   FOR: "for",
   SWITCH: "switch",
   ONNUM_ALENGI: "onnum_alengi",
+  INATHE_DATE: "inathe_date",
 
   // End of File
   EOF: "EOF",

@@ -134,11 +134,34 @@ export const input_eduku_native_function = (args, env) => {
   }
 };
 
+export const inathe_date_native_function = (args, env) => {
+  const includeTime = args.length > 0 ? evaluate(args[0], env).value : false;
+  const varName = args.length > 1 ? args[1].symbol : null;
+  const date = new Date();
+
+  let dateString = "";
+  if (includeTime) {
+    dateString = date.toLocaleString();
+  } else {
+    dateString = date.toLocaleDateString();
+  }
+
+  if (varName) {
+    const stringVal = new StringVal(dateString);
+    env.declareVar(varName, stringVal, false);
+  } else {
+    console.log(dateString);
+  }
+
+  return MK_NULL();
+};
+
 const nativeFunctionRegistry = {
   para: para_native_function,
   veluthu: veluthu_native_function,
   cheruthu: cheruthu_native_function,
   input_eduku: input_eduku_native_function,
+  inathe_date: inathe_date_native_function,
 };
 
 // Function to call a native function
