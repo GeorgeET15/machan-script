@@ -132,7 +132,7 @@ switch machane ( x ) {
 ```machan
 ithu a = 1 aanu
 
-machane ( a == 5 ) avane vare {
+machane ( a <= 5 ) avane vare {
 
   para ( a ) ;
   a = a + 1

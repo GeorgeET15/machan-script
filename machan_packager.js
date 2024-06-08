@@ -29,7 +29,6 @@ async function packageFiles(inputFiles, outputFile) {
 }
 
 const inputFiles = [
-  "./main.js",
   "./frontend/lexer.js",
   "./frontend/ast.js",
   "./frontend/parser.js",
@@ -39,6 +38,7 @@ const inputFiles = [
   "./runtime/values.js",
   "./runtime/machan_native_functions.js",
   "./runtime/interpreter.js",
+  "./main.js",
 ];
 const outputFile = "index.js";
 packageFiles(inputFiles, outputFile);
