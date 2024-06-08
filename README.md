@@ -17,7 +17,7 @@ To start using MachanScript, follow these simple steps:
 2. **Syntax Overview**:
 
    - `ithu varName = value aanu` : Used to declare variables.
-   - `ithu const variable = value aanu` : Used to declare constant variables.
+   - `ithu const varName = value aanu` : Used to declare constant variables.
    - `ithu b = "Hello World" aanu` : Used to declare strings.
    - `ithu arr = [ 1 , 4 , 6 , 8 , 3 ]` : Used to declare arrays.
    - `ithu obj = { x : 100 , y : 200 , } aanu` : Example of creating objects.
@@ -35,14 +35,14 @@ To start using MachanScript, follow these simple steps:
    - Object Creation:
 
      ```machan
-     ithu obj = { x : 100 , y : 200 , } aanu
-     ithu const obj = { z : 300 , v : 400 , } aanu
+     ithu obj1 = { x : 100 , y : 200 , } aanu
+     ithu const obj2 = { z : 300 , v : 400 , } aanu
      ```
 
    - Printing:
      ```machan
      para ( "Hello World!!" ) ;
-     para ( obj . x + obj . y ) ;
+     para ( "Sum: " ,  obj1 . x + obj2 . z ) ;
      ```
 
 ## Native Functions
@@ -50,10 +50,15 @@ To start using MachanScript, follow these simple steps:
 MachanScript provides the following native functions:
 
 - `para ( message ) ;` : Prints the message to the console.
-- `input ( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
-- `veluthu ( arg1 , arg2...., varName ) ;` : Returns the largest. We can either pass sperate values or an array or seperate values and an arr. The returened value will be stored in the last passed varName.
+- `input_eduku ( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
+- `veluthu ( arg1 , arg2...., varName ) ;` : Returns the largest. We can either pass sperate values or an array or seperate values and an array. The returned value will be stored in the last passed `varName`.
 - `cheruthu ( arg1 , arg2...., varName) ;` : Same as of `veluthu` except it returns the smallest value
-- `inathe_date ( boolVal , varName ) ;` : Returns the date, if true it also returns the time, if we pass the varName the returned value will be stored in the new variable created.
+- `inathe_date ( boolVal , varName ) ;` : Returns the date, if true it also returns the time, if we pass the `varName` the returned value will be stored in the new variable created.
+- `vayiku ( file , varName ) ;` : Prints the content in the file, if we pass the `varName` the returned content will be stored in the new variable created.
+- `ezhuthu ( file , data ) ;` : Stores the data we passed to the file. We can either directly pass a string or a variable containing a string,
+- `random ( min , max , varName ) ;` : Returns a random number between the min and max range, if we pass the `varName` the returned value will be stored in the new variable created.
+- `fact ( number , varName ) ;` : Returns the factorial of the number, if we pass the `varName` the returned value will be stored in the new variable created.
+- `orangu ( milliseconds ) ;` : It will synchronously pause the execution of other operations for the specified number of milliseconds before resuming..
 
 ## Control Statements
 
@@ -62,7 +67,7 @@ MachanScript supports the following control statements:
 - `ipo` : Used for conditional execution. Followed by a condition and a block of code to execute if the condition is true.
 - `anengi` : Marks the beginning of the block of code to execute if the condition in an `ipo` statement is true.
 - `alengi` : Marks the beginning of the block of code to execute if the condition in an `ipo` statement is false.
-- `switch machane` : Used for conUsed for conditional execution. Different cases are declared by `ipo` value `anengi` and the default it set by `onnum_alengi`.
+- `switch machane` : Used for conditional execution. Different cases are declared by `ipo` value `anengi` and the default it set by `onnum_alengi`.
 
 ## Loop Statements
 
@@ -74,43 +79,6 @@ MachanScript supports the following loop statements:
 - `enit` : Marks the beginning block of code to execute in a `for machane` loop.
 
 ## Examples 😉
-
-### Machan Native Functions
-
-#### `input_eduku`
-
-Usage :
-
-```machan
-input_eduku ( w , "Enter a number, a string or an array: ") ;
-para ( w ) ;
-para ( w [ 2 ] ) ; //arrays
-```
-
-#### `cheruthu` , `veluthu`
-
-Usage :
-
-```machan
-ithu arr = [ 3 , 5 , 6 , 9 , 7 , 101 ] aanu
-
-cheruthu ( arr , small ) ;
-para ( small ) ;
-
-veluthu ( arr , 12 , 4 , 65 , 1 , 100 , 99 , large ) ;
-para ( large ) ;
-```
-
-#### `innathe_date`
-
-Usage :
-
-```machan
-inathe_date ( ) ;
-inathe_date ( true ) ;
-inathe_date ( true , y ) ;
-inathe_date ( false , x ) ;
-```
 
 ### Conditional Execution ( `ipo`, `anengi`, `alengi` )
 
@@ -184,6 +152,101 @@ for machane ( ithu i = 0 aanu : i < 5 : i = i + 1 ) enit {
 }
 ```
 
+### Machan Native Functions
+
+#### `input_eduku`
+
+Usage :
+
+```machan
+input_eduku ( w , "Enter a number, a string or an array: ") ;
+para ( w ) ;
+para ( w [ 2 ] ) ; //arrays
+```
+
+#### `cheruthu` , `veluthu`
+
+Usage :
+
+```machan
+ithu arr = [ 3 , 5 , 6 , 9 , 7 , 101 ] aanu
+
+cheruthu ( arr , small ) ;
+para ( small ) ;
+
+veluthu ( arr , 12 , 4 , 65 , 1 , 100 , 99 , large ) ;
+para ( large ) ;
+```
+
+#### `innathe_date`
+
+Usage :
+
+```machan
+inathe_date ( ) ;
+inathe_date ( true ) ;
+inathe_date ( true , y ) ;
+inathe_date ( false , x ) ;
+para ( "date: " , x ) ;
+```
+
+#### `vayiku`
+
+Usage :
+
+```machan
+vayiku ( "./test1.txt" ) ;
+ithu filePath = "./test1.txt" aanu
+vayiku ( filePath ) ;
+```
+
+#### `ezhuthu`
+
+Usage :
+
+```machan
+ezhuthu ( "./test1.txt", "Hello") ;
+ithu y = "./test1.txt" aanu
+ithu x = "Hello" aanu
+ezhuthu ( y , x ) ;
+```
+
+#### `random`
+
+Usage :
+
+```machan
+random ( 1 , 5 ) ;
+random ( 1 , 5 , a ) ;
+para ( a ) ;
+```
+
+#### `fact`
+
+Usage :
+
+```machan
+fact ( 4 ) ;
+fact ( 4 , a ) ;
+para ( a ) ;
+```
+
+#### `orangu`
+
+Usage :
+
+```machan
+ithu b = 10 aanu
+ithu c = 0 aanu
+
+machane ( c <= b ) avane vare {
+
+    para ( c ) ;
+    orangu ( 2000 ) ;
+    c = c + 1
+}
+```
+
 ## Running Code 🚀
 
 You can run MachanScript files from the command line using the following command:
@@ -194,7 +257,7 @@ machane filename.ms
 
 ## VSCode Extension
 
-MachanScript also has a [VSCode extension](https://marketplace.visualstudio.com/items?itemName=GeorgeET15.machanscript) for syntax highlighting. .
+The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET15.machanscript) extension enables syntax highlighting in VSCode.
 
 ## Version History 📝
 
@@ -202,10 +265,10 @@ MachanScript also has a [VSCode extension](https://marketplace.visualstudio.com/
 
 - Initial release of MachanScript.
 - Basic functionality for variable declaration, object creation, and control statements.
-- Machan Native Functions like `para`, `input_eduku`, `cheruthu`, `veluthu`, `inathe_date`.
+- Machan Native Functions like `para`, `input_eduku`, `cheruthu`, `veluthu`, `inathe_date`, `vayiku`, `ezhuthu`, `random`, `fact`, `orangu`.
 - Support for conditional execution with `ipo`, `anengi`, `alengi`, `switch machane`, `oonum-alengi`.
 - Support for `while` Loops with `machane`, `avane`, `vare`.
-- Support for `for` loops with `for`, `enit`, `para`.
+- Support for `for` loops with `for`, `enit`.
 
 ## Author 😁
 

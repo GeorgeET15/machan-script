@@ -62,6 +62,11 @@ export const TokenType = {
   SWITCH: "switch",
   ONNUM_ALENGI: "onnum_alengi",
   INATHE_DATE: "inathe_date",
+  VAYIKU: "vayiku",
+  EZHUTHU: "ezhuthu",
+  RANDOM: "random",
+  FACT: "fact",
+  ORANGU: "orangu",
 
   // End of File
   EOF: "EOF",

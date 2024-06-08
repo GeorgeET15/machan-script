@@ -82,6 +82,11 @@ export class Parser {
       case TokenType.CHERUTHU:
       case TokenType.INPUT_EDUKU:
       case TokenType.INATHE_DATE:
+      case TokenType.VAYIKU:
+      case TokenType.EZHUTHU:
+      case TokenType.RANDOM:
+      case TokenType.FACT:
+      case TokenType.ORANGU:
         return this.parse_native_function_call();
       case TokenType.IPO:
         return this.parse_ipo_statement(); // Add support for if statements
@@ -488,7 +493,7 @@ export class Parser {
 
       default:
         console.log(
-          chalk.red("Machane pani kitti") +
+          chalk.red("Machane pani kitti ") +
             chalk.yellow("Unexpected token found while parsing!", tk)
         );
         process.exit(1);

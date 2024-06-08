@@ -132,7 +132,7 @@ export const evaluate_comparison_expression = (compExpr, env) => {
     }
   } else {
     console.log(
-      chalk.red("Machane pani kitti") +
+      chalk.red("Machane pani kitti ") +
         chalk.yellow("Operands in comparison expression must be numbers.")
     );
     return MK_NULL();
