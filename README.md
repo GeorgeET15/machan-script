@@ -51,6 +51,7 @@ MachanScript provides the following native functions:
 
 - `para ( message ) ;` : Prints the message to the console.
 - `input_eduku ( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
+- `orangu ( milliseconds ) ;` : It will synchronously pause the execution of other operations for the specified number of milliseconds before resuming.
 - `veluthu ( arg1 , arg2...., varName ) ;` : Returns the largest. We can either pass sperate values or an array or seperate values and an array. The returned value will be stored in the last passed `varName`.
 - `cheruthu ( arg1 , arg2...., varName) ;` : Same as of `veluthu` except it returns the smallest value
 - `inathe_date ( boolVal , varName ) ;` : Returns the date, if true it also returns the time, if we pass the `varName` the returned value will be stored in the new variable created.
@@ -58,7 +59,6 @@ MachanScript provides the following native functions:
 - `ezhuthu ( file , data ) ;` : Stores the data we passed to the file. We can either directly pass a string or a variable containing a string,
 - `random ( min , max , varName ) ;` : Returns a random number between the min and max range, if we pass the `varName` the returned value will be stored in the new variable created.
 - `fact ( number , varName ) ;` : Returns the factorial of the number, if we pass the `varName` the returned value will be stored in the new variable created.
-- `orangu ( milliseconds ) ;` : It will synchronously pause the execution of other operations for the specified number of milliseconds before resuming..
 
 ## Control Statements
 
@@ -164,6 +164,22 @@ para ( w ) ;
 para ( w [ 2 ] ) ; //arrays
 ```
 
+#### `orangu`
+
+Usage :
+
+```machan
+ithu b = 10 aanu
+ithu c = 0 aanu
+
+machane ( c <= b ) avane vare {
+
+    para ( c ) ;
+    orangu ( 2000 ) ;
+    c = c + 1
+}
+```
+
 #### `cheruthu` , `veluthu`
 
 Usage :
@@ -229,22 +245,6 @@ Usage :
 fact ( 4 ) ;
 fact ( 4 , a ) ;
 para ( a ) ;
-```
-
-#### `orangu`
-
-Usage :
-
-```machan
-ithu b = 10 aanu
-ithu c = 0 aanu
-
-machane ( c <= b ) avane vare {
-
-    para ( c ) ;
-    orangu ( 2000 ) ;
-    c = c + 1
-}
 ```
 
 ## Running Code 🚀
