@@ -16,6 +16,7 @@ To start using MachanScript, follow these simple steps:
 
 2. **Syntax Overview**:
 
+   - `Machane!!` : Every MachanScript file should start by calling Machan, or else the code will not run.
    - `ithu varName = value aanu` : Used to declare variables.
    - `ithu const varName = value aanu` : Used to declare constant variables.
    - `ithu b = "Hello World" aanu` : Used to declare strings.
@@ -85,6 +86,8 @@ MachanScript supports the following loop statements:
 - Usage:
 
 ```machan
+Machane!!
+
 ithu x = 5 aanu
 
 ipo ( x < 10 ) anengi {
@@ -103,6 +106,8 @@ ipo ( x < 10 ) anengi {
 - Usage:
 
 ```machan
+Machane!!
+
 input_eduku ( x , "Enter a number: ") ;
 
 switch machane ( x ) {
@@ -130,6 +135,8 @@ switch machane ( x ) {
 - Usage:
 
 ```machan
+Machane!!
+
 ithu a = 1 aanu
 
 machane ( a <= 5 ) avane vare {
@@ -145,6 +152,8 @@ machane ( a <= 5 ) avane vare {
 - Usage:
 
 ```machan
+Machane!!
+
 for machane ( ithu i = 0 aanu : i < 5 : i = i + 1 ) enit {
 
    para ( i ) ;
@@ -159,6 +168,8 @@ for machane ( ithu i = 0 aanu : i < 5 : i = i + 1 ) enit {
 Usage :
 
 ```machan
+Machane!!
+
 input_eduku ( w , "Enter a number, a string or an array: ") ;
 para ( w ) ;
 para ( w [ 2 ] ) ; //arrays
@@ -169,6 +180,8 @@ para ( w [ 2 ] ) ; //arrays
 Usage :
 
 ```machan
+Machane!!
+
 ithu b = 10 aanu
 ithu c = 0 aanu
 
@@ -185,6 +198,8 @@ machane ( c <= b ) avane vare {
 Usage :
 
 ```machan
+Machane!!
+
 ithu arr = [ 3 , 5 , 6 , 9 , 7 , 101 ] aanu
 
 cheruthu ( arr , small ) ;
@@ -199,6 +214,8 @@ para ( large ) ;
 Usage :
 
 ```machan
+Machane!!
+
 inathe_date ( ) ;
 inathe_date ( true ) ;
 inathe_date ( true , y ) ;
@@ -211,6 +228,8 @@ para ( "date: " , x ) ;
 Usage :
 
 ```machan
+Machane!!
+
 vayiku ( "./test1.txt" ) ;
 ithu filePath = "./test1.txt" aanu
 vayiku ( filePath ) ;
@@ -221,6 +240,8 @@ vayiku ( filePath ) ;
 Usage :
 
 ```machan
+Machane!!
+
 ezhuthu ( "./test1.txt", "Hello") ;
 ithu y = "./test1.txt" aanu
 ithu x = "Hello" aanu
@@ -232,6 +253,8 @@ ezhuthu ( y , x ) ;
 Usage :
 
 ```machan
+Machane!!
+
 random ( 1 , 5 ) ;
 random ( 1 , 5 , a ) ;
 para ( a ) ;
@@ -242,6 +265,8 @@ para ( a ) ;
 Usage :
 
 ```machan
+Machane!!
+
 fact ( 4 ) ;
 fact ( 4 , a ) ;
 para ( a ) ;
@@ -272,4 +297,4 @@ The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET1
 
 ## Author 😁
 
-MachanScript was created by [GeorgeET15](https://github.com/GeorgeET15). You can find more about the him on [GitHub](https://github.com/GeorgeET15), [LinknedIn](https://www.linkedin.com/in/george-emmanuel-thomas-518060202/).
+MachanScript was created by `GeorgeET15`. You can find more about the him on [GitHub](https://github.com/GeorgeET15), [LinknedIn](https://www.linkedin.com/in/george-emmanuel-thomas-518060202/).
