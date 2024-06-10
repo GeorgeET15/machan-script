@@ -46,6 +46,10 @@ To start using MachanScript, follow these simple steps:
      para ( "Sum: " ,  obj1 . x + obj2 . z ) ;
      ```
 
+4. **Saving the file**:
+
+   - `.ms` : Save the file with `.ms` extension.
+
 ## Native Functions
 
 MachanScript provides the following native functions:
