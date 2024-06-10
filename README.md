@@ -12,7 +12,7 @@ To start using MachanScript, follow these simple steps:
    npm i -g machan-script
    ```
 
-   Note :- Assuming that you have [Node.js](https://nodejs.org/en/download/package-manager) installed
+   Note :- Assuming that you have [Node.js](https://nodejs.org/en/download/package-manager) installed, if not please install before continuing
 
 2. **Syntax Overview**:
 
