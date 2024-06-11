@@ -48,7 +48,7 @@ To start using MachanScript, follow these simple steps:
 
 4. **Saving the file**:
 
-   - `.ms` : Save the file with `.ms` extension.
+   - Save the file with `.ms` extension.
 
 ## Native Functions
 
