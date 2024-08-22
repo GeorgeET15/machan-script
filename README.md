@@ -301,4 +301,4 @@ The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET1
 
 ## Author 😁
 
-MachanScript was created by [GeorgeET15](georgeemmanuelthomas.dev). You can find more about the him on [GitHub](https://github.com/GeorgeET15), [LinknedIn](https://www.linkedin.com/in/george-emmanuel-thomas-518060202/).
+MachanScript was created by [GeorgeET15](https://georgeemmanuelthomas.dev). You can find more about the him on [GitHub](https://github.com/GeorgeET15), [LinknedIn](https://www.linkedin.com/in/george-emmanuel-thomas-518060202/).
