@@ -1,4 +1,4 @@
-import { RuntimeVal } from "./values.js";
+import chalk from "chalk";
 import { MK_NULL, MK_BOOL } from "./values.js";
 
 export const setUpScope = (env) => {
@@ -19,7 +19,9 @@ export class Environment {
   declareVar(varname, value, constant) {
     if (this.variables.has(varname)) {
       throw new Error(
-        `Cannot declare variable ${varname}. It is already defined.`
+        chalk.yellow(
+          `Cannot declare variable ${varname}. It is already defined.`
+        )
       );
     }
     this.variables.set(varname, value);
@@ -32,7 +34,9 @@ export class Environment {
   assignVar(varname, value) {
     const env = this.resolve(varname);
     if (env.constants.has(varname)) {
-      throw new Error(`${varname} is a const variable, cannot reassign value`);
+      throw new Error(
+        chalk.yellow(`${varname} is a const variable, cannot reassign value`)
+      );
     }
     env.variables.set(varname, value);
     return value;
@@ -43,7 +47,7 @@ export class Environment {
       return this;
     }
     if (this.parent === null) {
-      throw `Cannot resolve '${varname}'. It does not exist.`;
+      throw chalk.yellow(`Cannot resolve '${varname}'. It does not exist.`);
     }
     return this.parent.resolve(varname);
   }

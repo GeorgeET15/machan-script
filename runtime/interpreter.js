@@ -18,6 +18,7 @@ import {
 } from "./eval/statements.js";
 
 import { call_native_function } from "./machan_native_functions.js";
+import chalk from "chalk";
 
 // Main evaluate function to handle different AST nodes
 export const evaluate = (astNode, env) => {
@@ -57,8 +58,11 @@ export const evaluate = (astNode, env) => {
 
     default:
       console.error(
-        "This AST Node has not yet been setup for interpretation.",
-        astNode
+        chalk.red("Machane pani kitti ") +
+          chalk.yellow(
+            "This AST Node has not yet been setup for interpretation.",
+            astNode
+          )
       );
       return MK_NULL();
   }

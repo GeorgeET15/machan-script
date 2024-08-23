@@ -20,7 +20,7 @@ To start using MachanScript, follow these simple steps:
    - `ithu varName = value aanu` : Used to declare variables.
    - `ithu const varName = value aanu` : Used to declare constant variables.
    - `ithu b = "Hello World" aanu` : Used to declare strings.
-   - `ithu arr = [ 1 , 4 , 6 , 8 , 3 ]` : Used to declare arrays.
+   - `ithu arr = [ 1 , 4 , 6 , 8 , 3 ] aanu` : Used to declare arrays.
    - `ithu obj = { x : 100 , y : 200 , } aanu` : Example of creating objects.
    - `obj . x | obj . y` : Accessing object properties.
 

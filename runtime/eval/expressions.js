@@ -78,7 +78,9 @@ export const evaluate_member_expression = (memberExpr, env) => {
     if (value) {
       return value;
     } else {
-      console.error(`Property '${property}' does not exist in the object.`);
+      console.error(
+        chalk.yellow(`Property '${property}' does not exist in the object.`)
+      );
       return MK_NULL();
     }
   } else if (object.type === "array") {
@@ -90,16 +92,22 @@ export const evaluate_member_expression = (memberExpr, env) => {
       if (intValue >= 0 && intValue < object.elements.length) {
         return object.elements[intValue];
       } else {
-        console.error(`Index '${intValue}' out of bounds for array.`);
+        console.error(
+          chalk.yellow(`Index '${intValue}' out of bounds for array.`)
+        );
         return MK_NULL();
       }
     } else {
-      console.error("Index in array access must be an integer number.");
+      console.error(
+        chalk.yellow("Index in array access must be an integer number.")
+      );
       return MK_NULL();
     }
   } else {
     console.error(
-      "Left-hand side of member expression must be an object or array."
+      chalk.yellow(
+        "Left-hand side of member expression must be an object or array."
+      )
     );
     return MK_NULL();
   }

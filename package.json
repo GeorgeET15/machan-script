@@ -1,6 +1,6 @@
 {
   "name": "machan-script",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "MachanScript is a lightweight programming language written in Javascript.",
   "main": "main.js",
   "type": "module",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
     "inquirer": "^9.2.23",
     "prompt-sync": "^4.2.0"
   },

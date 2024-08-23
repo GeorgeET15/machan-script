@@ -2,6 +2,7 @@ import { ArrayVal, MK_NULL, NumberVal, StringVal } from "./values.js";
 import { evaluate } from "./interpreter.js";
 import ps from "prompt-sync";
 import fs from "fs/promises";
+import chalk from "chalk";
 
 // Define the para function
 const para_native_function = (args, env) => {
@@ -33,7 +34,9 @@ const para_native_function = (args, env) => {
         }
         break;
       default:
-        output += "Unsupported argument type for para function.";
+        chalk.yellow(
+          (output += "Unsupported argument type for para function.")
+        );
         break;
     }
   }
@@ -43,7 +46,9 @@ const para_native_function = (args, env) => {
 
 export const veluthu_native_function = (args, env) => {
   if (args.length < 2) {
-    console.error("veluthu function expects at least 2 arguments.");
+    console.error(
+      chalk.yellow("veluthu function expects at least 2 arguments.")
+    );
     return MK_NULL();
   }
 
@@ -64,7 +69,9 @@ export const veluthu_native_function = (args, env) => {
 
   if (numbers.length === 0) {
     console.error(
-      "veluthu function expects at least one number as an argument."
+      chalk.yellow(
+        "veluthu function expects at least one number as an argument."
+      )
     );
     return MK_NULL();
   }
@@ -77,7 +84,9 @@ export const veluthu_native_function = (args, env) => {
 
 export const cheruthu_native_function = (args, env) => {
   if (args.length < 2) {
-    console.error("cheruthu function expects at least 2 arguments.");
+    console.error(
+      chalk.yellow("cheruthu function expects at least 2 arguments.")
+    );
     return MK_NULL();
   }
 
@@ -98,7 +107,9 @@ export const cheruthu_native_function = (args, env) => {
 
   if (numbers.length === 0) {
     console.error(
-      "cheruthu function expects at least one number as an argument."
+      chalk.yellow(
+        "cheruthu function expects at least one number as an argument."
+      )
     );
     return MK_NULL();
   }
@@ -111,7 +122,7 @@ export const cheruthu_native_function = (args, env) => {
 
 export const input_eduku_native_function = (args, env) => {
   if (args.length !== 2) {
-    console.error("input function expects exactly 2 arguments.");
+    console.error(chalk.yellow("input function expects exactly 2 arguments."));
     return MK_NULL();
   }
 
@@ -173,7 +184,7 @@ export const inathe_date_native_function = (args, env) => {
 
 export const vayiku_native_function = async (args, env) => {
   if (args.length < 1 || args.length > 2) {
-    console.error("vayiku function expects 1 or 2 arguments.");
+    console.error(chalk.yellow("vayiku function expects 1 or 2 arguments."));
     return MK_NULL();
   }
 
@@ -193,14 +204,16 @@ export const vayiku_native_function = async (args, env) => {
       console.log(read.value);
     }
   } catch (error) {
-    console.error(`Error reading file: ${error.message}`);
+    console.error(chalk.yellow(`Error reading file: ${error.message}`));
     return MK_NULL();
   }
 };
 
 export const ezhuthu_native_function = async (args, env) => {
   if (args.length !== 2) {
-    console.error("ezhuthu function expects exactly 2 arguments.");
+    console.error(
+      chalk.yellow("ezhuthu function expects exactly 2 arguments.")
+    );
     return MK_NULL();
   }
 
@@ -212,10 +225,10 @@ export const ezhuthu_native_function = async (args, env) => {
 
   try {
     await fs.writeFile(filePath, data, "utf-8");
-    console.log(`Successfully wrote to file: ${filePath}`);
+    console.log(chalk.green(`Successfully wrote to file: ${filePath}`));
     return MK_NULL();
   } catch (error) {
-    console.error(`Error writing to file: ${error.message}`);
+    console.error(chalk.red(`Error writing to file: ${error.message}`));
     return MK_NULL();
   }
 };
@@ -258,14 +271,16 @@ export const factorial_native_function = (args, env) => {
 
 export const orangu_native_function = (args, env) => {
   if (args.length !== 1) {
-    console.error("orangu function expects exactly 1 argument.");
+    console.error(chalk.yellow("orangu function expects exactly 1 argument."));
     return MK_NULL();
   }
 
   const milliseconds = args[0].value;
 
   if (typeof milliseconds !== "number" || milliseconds < 0) {
-    console.error("The argument to orangu must be a non-negative number.");
+    console.error(
+      chalk.yellow("The argument to orangu must be a non-negative number.")
+    );
     return MK_NULL();
   }
 
@@ -297,7 +312,10 @@ export const call_native_function = (name, args, env) => {
   if (nativeFunction) {
     return nativeFunction(args, env);
   } else {
-    console.error(`Native function '${name}' is not defined.`);
+    console.error(
+      chalk.red("Machane pani kitti ") +
+        chalk.yellow(`Native function '${name}' is not defined.`)
+    );
     return MK_NULL();
   }
 };

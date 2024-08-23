@@ -48,11 +48,7 @@ export class Parser {
 
     if (!prev || prev.type !== type) {
       console.error(
-        chalk.red("Parser Error:\n"),
-        err_message,
-        prev,
-        " - Expecting: ",
-        chalk.green(type)
+        chalk.red("Machane pani kitti ") + chalk.yellow(err_message)
       );
       process.exit(1);
     }
