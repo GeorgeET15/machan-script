@@ -290,6 +290,12 @@ The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET1
 
 ## Version History 📝
 
+### v3.0.0 (August-2024)
+
+- New and improved CLI
+- Users can program in the CLI
+- Updated error messages
+
 ### v0.1 (June-2024)
 
 - Initial release of MachanScript.
