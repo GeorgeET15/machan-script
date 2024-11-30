@@ -308,3 +308,13 @@ The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET1
 ## Author 😁
 
 MachanScript was created by [GeorgeET15](https://georgeemmanuelthomas.dev). You can find more about the him on [GitHub](https://github.com/GeorgeET15), [LinknedIn](https://www.linkedin.com/in/george-emmanuel-thomas-518060202/).
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE). Please provide appropriate credit to the author when using this software. Contributions are welcome!
+
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+
+## Credit
+
+If you use MachanScript in your project, please acknowledge the author, **George Emmanuel Thomas**, in your documentation or credits section.
