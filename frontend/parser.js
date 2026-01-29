@@ -108,7 +108,7 @@ export class Parser {
         return this.parse_for_statement();
       case TokenType.SWITCH:
         return this.parse_switch_statement(); // Add support for switch statements
-      case TokenType.BREAK:
+      case TokenType.NIRTH:
         this.eat(); // eat break kw
         return new BreakStatement();
       case TokenType.CONTINUE:
@@ -288,7 +288,7 @@ export class Parser {
     this.expect(TokenType.LEFT_PAREN, "Expected '(' after 'while'");
     const condition = this.parse_expression();
     this.expect(TokenType.RIGHT_PAREN, "Expected ')' after while condition");
-    this.expect(TokenType.AVANE, "Expected 'avane' keyword");
+    this.expect(TokenType.AAVANE, "Expected 'avane' keyword");
     this.expect(TokenType.VARE, "Expected 'vare' keyword");
 
     const body = this.parse_block();
