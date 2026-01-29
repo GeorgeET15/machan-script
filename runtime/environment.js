@@ -19,7 +19,7 @@ export class Environment {
     if (this.variables.has(varname)) {
       throw new Error(
         chalk.yellow(
-          `Cannot declare variable ${varname}. It is already defined.`
+          `Machane ${varname} already declared aanalo`
         )
       );
     }
@@ -46,7 +46,7 @@ export class Environment {
       return this;
     }
     if (this.parent === null) {
-      throw new Error(`Cannot resolve '${varname}'. It does not exist.`);
+      throw new Error(`Machane '${varname}' inagen oru item illa`);
     }
     return this.parent.resolve(varname);
   }

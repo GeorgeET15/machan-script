@@ -194,7 +194,7 @@ export class Parser {
   parse_function_declaration() {
     this.eat(); // eat machane
     this.expect(TokenType.PANI, "Expected 'pani' keyword");
-    const name = this.expect(TokenType.IDENTIFIER, "Expected function name").value;
+    const name = this.expect(TokenType.IDENTIFIER, "Machane function name adiku").value;
     const args = this.parse_args();
     const params = [];
     for (const arg of args) {
@@ -308,12 +308,12 @@ export class Parser {
 
       identifier = this.expect(
         TokenType.IDENTIFIER,
-        "Expected identifier name following 'ithu const'"
+        "Machane 'ithu' kazhinu oru var name adiku"
       ).value;
     } else {
       identifier = this.expect(
         TokenType.IDENTIFIER,
-        "Expected identifier name following 'ithu'"
+        "Machane 'ithu' kazhinu oru var name adiku"
       ).value;
     }
 
@@ -325,7 +325,7 @@ export class Parser {
       this.parse_expression()
     );
 
-    this.expect(TokenType.AANU, "Var declaration must end with 'aanu'");
+    this.expect(TokenType.AANU, "Machane var name kazhinu 'aanu' adiku");
 
     return declaration;
   }
@@ -634,11 +634,9 @@ export class Parser {
         return value;
 
       default:
-        console.log(
-          chalk.red("Machane pani kitti ") +
-            chalk.yellow("Unexpected token found while parsing!", tk)
+        throw new Error(
+          "Machaneee etho unxepected item ondalo code check cheyu."
         );
-        process.exit(1);
     }
   }
 }

@@ -97,7 +97,7 @@ export const evaluate_member_expression = (memberExpr, env) => {
         return object.elements[intValue];
       } else {
         console.error(
-          chalk.yellow(`Index '${intValue}' out of bounds for array.`)
+          chalk.yellow(`Machane array il athrem items ilaloo`)
         );
         return MK_NULL();
       }
@@ -154,7 +154,7 @@ export const evaluate_call_expression = (expr, env) => {
     return result;
   }
 
-  throw new Error("Cannot call something that is not a function");
+  throw new Error("Ithu function alla machane, call cheyyaan pattilla");
 };
 
 export const evaluate_comparison_expression = (compExpr, env) => {

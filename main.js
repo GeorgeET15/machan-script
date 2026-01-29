@@ -40,6 +40,7 @@ const typeText = async (text, delay = 100) => {
 const startREPL = () => {
   const parser = new Parser();
   const env = createGlobalEnv();
+  console.log(chalk.green("Machane, REPL set aayi! (Nirthan 'exit' adicha mathi)"));
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -94,7 +95,7 @@ const machan_script_cli = async (filePath) => {
     const lines = input.split("\n");
 
     if (lines[0].trim() !== "Machane!!") {
-      console.log(chalk.yellow("The first line should be Machane!!"));
+      console.log(chalk.yellow("First Line 'Mahcnae!!' eenu aarikanam buddy"));
       return;
     }
 
