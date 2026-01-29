@@ -27,6 +27,7 @@ import {
   ContinueStatement,
   FunctionDeclaration,
   ReturnStatement,
+  TryCatchStatement,
 } from "./ast.js";
 
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -53,11 +54,9 @@ export class Parser {
     const prev = this.tokens.shift();
 
     if (!prev || prev.type !== type) {
-      console.error(
-        chalk.red("Machane pani kitti ") + chalk.yellow(err_message) + 
-        chalk.gray(`\nFound: ${prev ? JSON.stringify(prev) : "End of File"}`)
+      throw new Error(
+        `Machane pani kitti ${err_message}\nFound: ${prev ? JSON.stringify(prev) : "End of File"}`
       );
-      process.exit(1);
     }
 
     return prev;
@@ -68,8 +67,10 @@ export class Parser {
     const program = new Program();
 
     while (this.not_eof()) {
-      // Corrected: added parentheses to call not_eof method
-      program.body.push(this.parse_statement());
+      const stmt = this.parse_statement();
+      if (stmt) {
+        program.body.push(stmt);
+      }
     }
 
     return program;
@@ -98,6 +99,10 @@ export class Parser {
         if (this.tokens[1] && this.tokens[1].type === TokenType.PANI) {
           return this.parse_function_declaration();
         }
+        // Check if it's try-catch (machane try cheyu)
+        if (this.tokens[1] && this.tokens[1].type === TokenType.TRY) {
+           return this.parse_try_catch_statement();
+        }
         return this.parse_while_statement();
       case TokenType.FOR:
         return this.parse_for_statement();
@@ -111,9 +116,16 @@ export class Parser {
         return new ContinueStatement();
       case TokenType.RETURN:
         return this.parse_return_statement();
+      case TokenType.SEMICOLON:
+        this.eat();
+        return null; // Empty statement
 
       default:
-        return this.parse_expression();
+        const expr = this.parse_expression();
+        if (this.at().type === TokenType.SEMICOLON) {
+          this.eat();
+        }
+        return expr;
     }
   }
 
@@ -162,6 +174,23 @@ export class Parser {
     const body = this.parse_block();
     return new DefaultStatement(body);
   }
+  parse_try_catch_statement() {
+    this.eat(); // eat machane
+    this.expect(TokenType.TRY, "Expected 'try' keyword");
+    this.expect(TokenType.CHEYU, "Expected 'cheyu' keyword");
+    
+    const tryBlock = this.parse_block();
+    
+    this.expect(TokenType.PIDIKU, "Expected 'pidiku' (catch) keyword");
+    this.expect(TokenType.LEFT_PAREN, "Expected '(' after pidiku");
+    const paramName = this.expect(TokenType.IDENTIFIER, "Expected catch parameter name").value;
+    this.expect(TokenType.RIGHT_PAREN, "Expected ')' after catch parameter");
+    
+    const catchBlock = this.parse_block();
+    
+    return new TryCatchStatement(tryBlock, paramName, catchBlock);
+  }
+
   parse_function_declaration() {
     this.eat(); // eat machane
     this.expect(TokenType.PANI, "Expected 'pani' keyword");
@@ -307,10 +336,46 @@ export class Parser {
 
   parse_assignment_expression() {
     const left = this.parse_logical_or_expression();
+    
     if (this.at().type == TokenType.EQUAL) {
       this.eat();
       const value = this.parse_assignment_expression();
       return new Assignment(left, value);
+    }
+    
+    // Compound Assignment: +=, -=, *=, /=, %=
+    if (
+      this.at().type == TokenType.PLUS_EQUALS ||
+      this.at().type == TokenType.MINUS_EQUALS ||
+      this.at().type == TokenType.STAR_EQUALS ||
+      this.at().type == TokenType.SLASH_EQUALS ||
+      this.at().type == TokenType.PERCENT_EQUALS
+    ) {
+      const operatorToken = this.eat();
+      const operator = {
+        [TokenType.PLUS_EQUALS]: "+",
+        [TokenType.MINUS_EQUALS]: "-",
+        [TokenType.STAR_EQUALS]: "*",
+        [TokenType.SLASH_EQUALS]: "/",
+        [TokenType.PERCENT_EQUALS]: "%",
+      }[operatorToken.type];
+      
+      const value = this.parse_assignment_expression();
+      // Desugar to: left = left op value
+      return new Assignment(left, new BinaryExpr("BinaryExpression", left, value, operator));
+    }
+    
+    // Increment/Decrement: ++, --
+    if (this.at().type == TokenType.PLUS_PLUS) {
+      this.eat();
+      // Desugar to: left = left + 1
+      return new Assignment(left, new BinaryExpr("BinaryExpression", left, new NumericLiteral(1), "+"));
+    }
+    
+    if (this.at().type == TokenType.MINUS_MINUS) {
+      this.eat();
+      // Desugar to: left = left - 1
+      return new Assignment(left, new BinaryExpr("BinaryExpression", left, new NumericLiteral(1), "-"));
     }
 
     return left;
@@ -341,7 +406,7 @@ export class Parser {
   }
 
   parse_unary_expression() {
-    if (this.at().type === TokenType.NOT) {
+    if (this.at().type === TokenType.NOT || this.at().type === TokenType.MINUS) {
       const operator = this.eat().value;
       const argument = this.parse_unary_expression();
       return new UnaryExpression(operator, argument);

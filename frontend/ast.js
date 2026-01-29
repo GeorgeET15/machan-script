@@ -222,3 +222,12 @@ export class ReturnStatement extends Statement {
     this.value = value;
   }
 }
+
+export class TryCatchStatement extends Statement {
+  constructor(tryBlock, paramName, catchBlock) {
+    super("TryCatchStatement");
+    this.tryBlock = tryBlock;
+    this.paramName = paramName;
+    this.catchBlock = catchBlock;
+  }
+}

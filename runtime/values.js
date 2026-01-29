@@ -96,3 +96,10 @@ export class ReturnVal extends RuntimeVal {
     this.value = value;
   }
 }
+
+export class NativeFunctionVal extends RuntimeVal {
+  constructor(call) {
+    super("native-function");
+    this.call = call;
+  }
+}

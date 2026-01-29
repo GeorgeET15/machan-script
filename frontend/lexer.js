@@ -29,6 +29,18 @@ export const TokenType = {
   LESS_THAN_OR_EQUAL: "LessThanOrEqual",
   EQUAL_EQUAL: "EqualEqual",
   NOT_EQUAL: "NotEqual",
+  
+  // Compound Assignment
+  PLUS_EQUALS: "PlusEquals",
+  MINUS_EQUALS: "MinusEquals",
+  STAR_EQUALS: "StarEquals",
+  SLASH_EQUALS: "SlashEquals",
+  PERCENT_EQUALS: "PercentEquals",
+  
+  // Increment/Decrement
+  PLUS_PLUS: "PlusPlus",
+  MINUS_MINUS: "MinusMinus",
+
   AND: "And",
   OR: "Or",
   NOT: "Not",
@@ -74,6 +86,9 @@ export const TokenType = {
   CONTINUE: "continue",
   PANI: "pani",
   RETURN: "return",
+  TRY: "try",
+  CHEYU: "cheyu",
+  PIDIKU: "pidiku",
 
   // End of File
   EOF: "EOF",
@@ -83,7 +98,8 @@ export const tokenize = (sourceCode) => {
   const tokens = [];
   // Improved regex that properly separates operators, strings, comments, and other tokens
   // Order matters: Strings -> Comments -> Multi-char ops -> Single-char ops -> Words
-  const pattern = /(['"])(?:(?=(\\?))\2.)*?\1|\/\/.*|\/\*[\s\S]*?\*\/|&&|\|\||==|!=|<=|>=|[+\-*\/%=<>!(){}\[\];:,.]|[^\s+\-*\/%=<>!(){}\[\];:,.]+/g;
+  // Added \d+\.\d+ to match floats before dot operator
+  const pattern = /(['"])(?:(?=(\\?))\2.)*?\1|\/\/.*|\/\*[\s\S]*?\*\/|&&|\|\||==|!=|<=|>=|\+=|-=|\*=|\/=|%=|\+\+|--|\d+\.\d+|[+\-*\/%=<>!(){}\[\];:,.]|[^\s+\-*\/%=<>!(){}\[\];:,.]+/g;
   const src = sourceCode.match(pattern) || [];
 
   for (const word of src) {
@@ -114,6 +130,13 @@ export const tokenize = (sourceCode) => {
           "*": TokenType.STAR,
           "/": TokenType.SLASH,
           "%": TokenType.PERCENT,
+          "+=": TokenType.PLUS_EQUALS,
+          "-=": TokenType.MINUS_EQUALS,
+          "*=": TokenType.STAR_EQUALS,
+          "/=": TokenType.SLASH_EQUALS,
+          "%=": TokenType.PERCENT_EQUALS,
+          "++": TokenType.PLUS_PLUS,
+          "--": TokenType.MINUS_MINUS,
           "(": TokenType.LEFT_PAREN,
           ")": TokenType.RIGHT_PAREN,
           "{": TokenType.LEFT_BRACE,

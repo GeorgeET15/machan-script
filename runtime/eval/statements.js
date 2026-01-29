@@ -1,5 +1,6 @@
-import { MK_NULL, BreakVal, ContinueVal, FunctionVal, ReturnVal } from "../values.js";
+import { MK_NULL, BreakVal, ContinueVal, FunctionVal, ReturnVal, StringVal } from "../values.js";
 import { evaluate } from "../interpreter.js";
+import { Environment } from "../environment.js";
 
 export const evaluate_program = (program, env) => {
   let lastEvaluated = MK_NULL();
@@ -91,6 +92,19 @@ export const evaluate_function_declaration = (declaration, env) => {
 export const evaluate_return_statement = (declaration, env) => {
   const value = declaration.value ? evaluate(declaration.value, env) : MK_NULL();
   return new ReturnVal(value);
+};
+
+export const evaluate_try_catch_statement = (node, env) => {
+  try {
+    const tryEnv = new Environment(env);
+    return evaluate_block(node.tryBlock, tryEnv);
+  } catch (error) {
+    const catchEnv = new Environment(env);
+    // Error is currently a string or Error object
+    const errorMsg = error.message || String(error);
+    catchEnv.declareVar(node.paramName, new StringVal(errorMsg), true);
+    return evaluate_block(node.catchBlock, catchEnv);
+  }
 };
 
 export const evaluate_switch_statement = (node, env) => {

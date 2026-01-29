@@ -1,16 +1,12 @@
-import { NumberVal, MK_NULL, ObjectVal, BoolVal, ArrayVal } from "../values.js";
+import { NumberVal, MK_NULL, ObjectVal, BoolVal, ArrayVal, StringVal } from "../values.js";
 import { evaluate } from "../interpreter.js";
 import chalk from "chalk";
 import { Environment } from "../environment.js";
 
 const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
   if (rhs.value === 0 && operator === "/") {
-    console.log(
-      chalk.red("Ente ponnu ") +
-        chalk.blue("machane ") +
-        chalk.red("zero vechu ara divide cheyane!!")
-    );
-    process.exit(1);
+    // Throw error instead of exiting process
+    throw new Error("Ente ponnu machane zero vechu ara divide cheyane!!");
   }
 
   switch (operator) {
@@ -21,8 +17,8 @@ const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
     case "*":
       return new NumberVal(lhs.value * rhs.value);
     case "/":
-      // Perform integer division using Math.floor()
-      return new NumberVal(Math.floor(lhs.value / rhs.value));
+      // Perform float division
+      return new NumberVal(lhs.value / rhs.value);
     case "%":
       return new NumberVal(lhs.value % rhs.value);
     default:
@@ -33,9 +29,17 @@ const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
 export const evaluate_binary_expression = (binop, env) => {
   const lhs = evaluate(binop.left, env);
   const rhs = evaluate(binop.right, env);
+  
+  // Numeric operations
   if (lhs.type === "number" && rhs.type === "number") {
     return evaluate_binary_numeric_expression(lhs, rhs, binop.operator);
   }
+  
+  // String concatenation with +
+  if (binop.operator === "+") {
+    return new StringVal(lhs.value.toString() + rhs.value.toString());
+  }
+  
   return MK_NULL();
 };
 
@@ -121,34 +125,36 @@ export const evaluate_call_expression = (expr, env) => {
   const args = expr.args.map((arg) => evaluate(arg, env));
   const fn = evaluate(expr.callee, env);
 
-  if (fn.type !== "function") {
-    throw new Error("Cannot call something that is not a function");
+  if (fn.type === "native-function") {
+    // console.log("Calling native function");
+    const result = fn.call(args, env);
+    return result;
   }
+  
+  // console.log("Calling regular function", fn.type);
 
-  const scope = new Environment(fn.env);
+  if (fn.type === "function") {
+    const scope = new Environment(fn.env);
 
-  // Bind arguments to parameters
-  for (let i = 0; i < fn.parameters.length; i++) {
-    // Check if enough args provided?
-    // JavaScript allows undefined.
-    // Let's assume passed args match or are undefined.
-    const varname = fn.parameters[i];
-    const value = args[i] || MK_NULL();
-    scope.declareVar(varname, value, false);
-  }
-
-  // Evaluate function body
-  let result = MK_NULL();
-  for (const statement of fn.declaration.body) {
-    result = evaluate(statement, scope);
-    if (result.type === "return") {
-      return result.value;
+    // Bind arguments to parameters
+    for (let i = 0; i < fn.parameters.length; i++) {
+        const varname = fn.parameters[i];
+        const value = args[i] || MK_NULL();
+        scope.declareVar(varname, value, false);
     }
+
+    // Evaluate function body
+    let result = MK_NULL();
+    for (const statement of fn.declaration.body) {
+        result = evaluate(statement, scope);
+        if (result.type === "return") {
+            return result.value;
+        }
+    }
+    return result;
   }
 
-  // If no return statement, return last evaluated expression value?
-  // Usually functions return null if explicit return is missing.
-  return result;
+  throw new Error("Cannot call something that is not a function");
 };
 
 export const evaluate_comparison_expression = (compExpr, env) => {
@@ -223,6 +229,16 @@ export const evaluate_unary_expression = (unaryExpr, env) => {
     console.log(
       chalk.red("Machane pani kitti ") +
         chalk.yellow("Operand for NOT operator must be a boolean.")
+    );
+    return MK_NULL();
+  } else if (unaryExpr.operator === "-") {
+    // Unary minus
+    if (argument.type === "number") {
+      return new NumberVal(-argument.value);
+    }
+    console.log(
+      chalk.red("Machane pani kitti ") +
+        chalk.yellow("Operand for unary minus must be a number.")
     );
     return MK_NULL();
   }

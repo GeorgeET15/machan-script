@@ -6,10 +6,20 @@ import chalk from "chalk";
 import { Parser } from "./frontend/parser.js";
 import { evaluate } from "./runtime/interpreter.js";
 import { Environment } from "./runtime/environment.js";
+import { nativeFunctionRegistry } from "./runtime/machan_native_functions.js";
+import { NativeFunctionVal } from "./runtime/values.js";
 import readline from "readline";
 
 const yellow = chalk.hex("#fbde4d");
 const red = chalk.bold.hex("#a00");
+
+const createGlobalEnv = () => {
+  const env = new Environment();
+  for (const [name, func] of Object.entries(nativeFunctionRegistry)) {
+    env.declareVar(name, new NativeFunctionVal(func), true);
+  }
+  return env;
+};
 
 // Function to animate text
 const typeText = async (text, delay = 100) => {
@@ -29,7 +39,7 @@ const typeText = async (text, delay = 100) => {
 
 const startREPL = () => {
   const parser = new Parser();
-  const env = new Environment();
+  const env = createGlobalEnv();
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -77,7 +87,7 @@ const startREPL = () => {
 // Main CLI function to execute a script file
 const machan_script_cli = async (filePath) => {
   const parser = new Parser();
-  const env = new Environment();
+  const env = createGlobalEnv();
 
   try {
     const input = await fs.readFile(filePath, "utf-8");

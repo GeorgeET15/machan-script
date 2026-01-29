@@ -22,6 +22,7 @@ import {
   evaluate_continue_statement,
   evaluate_function_declaration,
   evaluate_return_statement,
+  evaluate_try_catch_statement,
 } from "./eval/statements.js";
 
 import { call_native_function } from "./machan_native_functions.js";
@@ -57,7 +58,7 @@ export const evaluate = (astNode, env) => {
     case "UnaryExpression":
       return evaluate_unary_expression(astNode, env);
     case "NativeFunctionCall":
-      return call_native_function(astNode.name, astNode.args, env);
+      return call_native_function(astNode.name, astNode.args, env, evaluate);
     case "IfStatement":
       return evaluate_ipo_statement(astNode, env);
     case "WhileStatement":
@@ -74,6 +75,8 @@ export const evaluate = (astNode, env) => {
       return evaluate_function_declaration(astNode, env);
     case "ReturnStatement":
       return evaluate_return_statement(astNode, env);
+    case "TryCatchStatement":
+      return evaluate_try_catch_statement(astNode, env);
     case "CallExpression":
       return evaluate_call_expression(astNode, env);
 
