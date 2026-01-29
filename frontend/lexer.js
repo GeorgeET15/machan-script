@@ -70,6 +70,10 @@ export const TokenType = {
   RANDOM: "random",
   FACT: "fact",
   ORANGU: "orangu",
+  BREAK: "break",
+  CONTINUE: "continue",
+  PANI: "pani",
+  RETURN: "return",
 
   // End of File
   EOF: "EOF",
@@ -77,12 +81,17 @@ export const TokenType = {
 
 export const tokenize = (sourceCode) => {
   const tokens = [];
-  // Improved regex that properly separates operators, strings, and other tokens
-  // This regex matches: strings (quoted), multi-char operators, single-char operators/punctuation, or words
-  const pattern = /(['"])(?:(?=(\\?))\2.)*?\1|&&|\|\||==|!=|<=|>=|[+\-*\/%=<>!(){}\[\];:,.]|[^\s+\-*\/%=<>!(){}\[\];:,.]+/g;
+  // Improved regex that properly separates operators, strings, comments, and other tokens
+  // Order matters: Strings -> Comments -> Multi-char ops -> Single-char ops -> Words
+  const pattern = /(['"])(?:(?=(\\?))\2.)*?\1|\/\/.*|\/\*[\s\S]*?\*\/|&&|\|\||==|!=|<=|>=|[+\-*\/%=<>!(){}\[\];:,.]|[^\s+\-*\/%=<>!(){}\[\];:,.]+/g;
   const src = sourceCode.match(pattern) || [];
 
   for (const word of src) {
+    // Skip comments
+    if (word.startsWith("//") || word.startsWith("/*")) {
+      continue;
+    }
+
     if (!isNaN(word)) {
       tokens.push(new Token(word, TokenType.NUMBER));
     } else if (/^["'].*["']$/.test(word)) {

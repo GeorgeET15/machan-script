@@ -23,6 +23,10 @@ import {
   DefaultStatement,
   LogicalExpression,
   UnaryExpression,
+  BreakStatement,
+  ContinueStatement,
+  FunctionDeclaration,
+  ReturnStatement,
 } from "./ast.js";
 
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -50,7 +54,8 @@ export class Parser {
 
     if (!prev || prev.type !== type) {
       console.error(
-        chalk.red("Machane pani kitti ") + chalk.yellow(err_message)
+        chalk.red("Machane pani kitti ") + chalk.yellow(err_message) + 
+        chalk.gray(`\nFound: ${prev ? JSON.stringify(prev) : "End of File"}`)
       );
       process.exit(1);
     }
@@ -89,11 +94,23 @@ export class Parser {
       case TokenType.IPO:
         return this.parse_ipo_statement(); // Add support for if statements
       case TokenType.MACHANE:
-        return this.parse_while_statement(); // Add support for while loops
+        // Check if it's a function declaration (machane pani) or while loop (machane)
+        if (this.tokens[1] && this.tokens[1].type === TokenType.PANI) {
+          return this.parse_function_declaration();
+        }
+        return this.parse_while_statement();
       case TokenType.FOR:
         return this.parse_for_statement();
       case TokenType.SWITCH:
         return this.parse_switch_statement(); // Add support for switch statements
+      case TokenType.BREAK:
+        this.eat(); // eat break kw
+        return new BreakStatement();
+      case TokenType.CONTINUE:
+        this.eat(); // eat continue kw
+        return new ContinueStatement();
+      case TokenType.RETURN:
+        return this.parse_return_statement();
 
       default:
         return this.parse_expression();
@@ -145,6 +162,45 @@ export class Parser {
     const body = this.parse_block();
     return new DefaultStatement(body);
   }
+  parse_function_declaration() {
+    this.eat(); // eat machane
+    this.expect(TokenType.PANI, "Expected 'pani' keyword");
+    const name = this.expect(TokenType.IDENTIFIER, "Expected function name").value;
+    const args = this.parse_args();
+    const params = [];
+    for (const arg of args) {
+      if (arg.kind !== "Identifier") {
+        console.log(chalk.red("Machane pani kitti ") + chalk.yellow("Inside function declaration parameters must be strings."));
+        process.exit(1);
+      }
+      params.push(arg.symbol);
+    }
+    const body = this.parse_block();
+    return new FunctionDeclaration(name, params, body);
+  }
+
+  parse_return_statement() {
+    this.eat(); // eat return
+    let value = null;
+    if (this.at().type !== TokenType.SEMICOLON && this.at().type !== TokenType.RIGHT_BRACE) {
+       value = this.parse_expression();
+    }
+    if (this.at().type === TokenType.SEMICOLON) {
+      this.eat();
+    }
+    return new ReturnStatement(value);
+  }
+
+  parse_args() {
+    this.expect(TokenType.LEFT_PAREN, "Expected open parenthesis");
+    const args =
+      this.at().type == TokenType.RIGHT_PAREN
+        ? []
+        : this.parse_arguments_list();
+    this.expect(TokenType.RIGHT_PAREN, "Missing closing parenthesis inside arguments list");
+    return args;
+  }
+
   parse_for_statement() {
     this.expect(TokenType.FOR, "Expected 'for' keyword.");
     this.expect(TokenType.MACHANE, "Expected 'machane' keyword.");
@@ -419,17 +475,7 @@ export class Parser {
   }
 
   parse_call_expression(callee) {
-    this.expect(
-      TokenType.LEFT_PAREN,
-      "Expected open parenthesis after function call"
-    );
-
     const args = this.parse_arguments();
-    this.expect(
-      TokenType.RIGHT_PAREN,
-      "Expected closing parenthesis after function call"
-    );
-
     return new CallExpression(callee, args);
   }
 

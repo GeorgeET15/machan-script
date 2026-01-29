@@ -194,3 +194,31 @@ export class DefaultStatement extends Statement {
     this.body = body;
   }
 }
+
+export class BreakStatement extends Statement {
+  constructor() {
+    super("BreakStatement");
+  }
+}
+
+export class ContinueStatement extends Statement {
+  constructor() {
+    super("ContinueStatement");
+  }
+}
+
+export class FunctionDeclaration extends Statement {
+  constructor(name, parameters, body) {
+    super("FunctionDeclaration");
+    this.name = name;
+    this.parameters = parameters;
+    this.body = body;
+  }
+}
+
+export class ReturnStatement extends Statement {
+  constructor(value) {
+    super("ReturnStatement");
+    this.value = value;
+  }
+}

@@ -9,6 +9,7 @@ import {
   evaluate_array_expression,
   evaluate_logical_expression,
   evaluate_unary_expression,
+  evaluate_call_expression,
 } from "./eval/expressions.js";
 import {
   evaluate_program,
@@ -17,6 +18,10 @@ import {
   evaluate_while_statement,
   evaluate_for_statement,
   evaluate_switch_statement,
+  evaluate_break_statement,
+  evaluate_continue_statement,
+  evaluate_function_declaration,
+  evaluate_return_statement,
 } from "./eval/statements.js";
 
 import { call_native_function } from "./machan_native_functions.js";
@@ -61,6 +66,16 @@ export const evaluate = (astNode, env) => {
       return evaluate_for_statement(astNode, env);
     case "SwitchStatement":
       return evaluate_switch_statement(astNode, env);
+    case "BreakStatement":
+      return evaluate_break_statement();
+    case "ContinueStatement":
+      return evaluate_continue_statement();
+    case "FunctionDeclaration":
+      return evaluate_function_declaration(astNode, env);
+    case "ReturnStatement":
+      return evaluate_return_statement(astNode, env);
+    case "CallExpression":
+      return evaluate_call_expression(astNode, env);
 
     default:
       console.error(

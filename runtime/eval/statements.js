@@ -1,4 +1,4 @@
-import { MK_NULL } from "../values.js";
+import { MK_NULL, BreakVal, ContinueVal, FunctionVal, ReturnVal } from "../values.js";
 import { evaluate } from "../interpreter.js";
 
 export const evaluate_program = (program, env) => {
@@ -35,14 +35,20 @@ export const evaluate_while_statement = (node, env) => {
   let result = MK_NULL();
   while (evaluate(node.condition, env).value) {
     result = evaluate_block(node.body, env);
+    if (result.type === "break") break;
+    if (result.type === "continue") continue;
   }
-  return result;
+  return MK_NULL(); // Loops return null by default
 };
 
 const evaluate_block = (block, env) => {
   let result = MK_NULL();
   for (const statement of block) {
     result = evaluate(statement, env);
+    // Propagate break/continue/return
+    if (result.type === "break" || result.type === "continue" || result.type === "return") {
+      return result;
+    }
   }
   return result;
 };
@@ -51,11 +57,40 @@ export const evaluate_for_statement = (node, env) => {
   evaluate(node.init, env);
 
   while (evaluate(node.condition, env).value) {
-    evaluate_block(node.body, env);
+    const result = evaluate_block(node.body, env);
+    
+    if (result.type === "break") break;
+    // For continue, we still execute the increment
+    
     evaluate(node.increment, env);
   }
 
   return MK_NULL();
+};
+
+export const evaluate_break_statement = () => {
+  return new BreakVal();
+};
+
+export const evaluate_continue_statement = () => {
+  return new ContinueVal();
+};
+
+export const evaluate_function_declaration = (declaration, env) => {
+  const func = new FunctionVal(
+    declaration.name,
+    declaration.parameters,
+    declaration,
+    env
+  );
+
+  env.declareVar(declaration.name, func, true);
+  return func;
+};
+
+export const evaluate_return_statement = (declaration, env) => {
+  const value = declaration.value ? evaluate(declaration.value, env) : MK_NULL();
+  return new ReturnVal(value);
 };
 
 export const evaluate_switch_statement = (node, env) => {

@@ -67,3 +67,32 @@ export class ArrayVal extends RuntimeVal {
 export const MK_ARRAY = (elements = []) => {
   return new ArrayVal(elements);
 };
+
+export class BreakVal extends RuntimeVal {
+  constructor() {
+    super("break");
+  }
+}
+
+export class ContinueVal extends RuntimeVal {
+  constructor() {
+    super("continue");
+  }
+}
+
+export class FunctionVal extends RuntimeVal {
+  constructor(name, parameters, declaration, env) {
+    super("function");
+    this.name = name;
+    this.parameters = parameters;
+    this.declaration = declaration;
+    this.env = env;
+  }
+}
+
+export class ReturnVal extends RuntimeVal {
+  constructor(value) {
+    super("return");
+    this.value = value;
+  }
+}

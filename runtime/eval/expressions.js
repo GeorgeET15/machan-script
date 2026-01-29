@@ -1,6 +1,7 @@
 import { NumberVal, MK_NULL, ObjectVal, BoolVal, ArrayVal } from "../values.js";
 import { evaluate } from "../interpreter.js";
 import chalk from "chalk";
+import { Environment } from "../environment.js";
 
 const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
   if (rhs.value === 0 && operator === "/") {
@@ -114,6 +115,40 @@ export const evaluate_member_expression = (memberExpr, env) => {
 
 export const evaluate_string_literal = (stringLiteral) => {
   return new StringVal(stringLiteral.value); // Create a StringVal instance with the string literal's value
+};
+
+export const evaluate_call_expression = (expr, env) => {
+  const args = expr.args.map((arg) => evaluate(arg, env));
+  const fn = evaluate(expr.callee, env);
+
+  if (fn.type !== "function") {
+    throw new Error("Cannot call something that is not a function");
+  }
+
+  const scope = new Environment(fn.env);
+
+  // Bind arguments to parameters
+  for (let i = 0; i < fn.parameters.length; i++) {
+    // Check if enough args provided?
+    // JavaScript allows undefined.
+    // Let's assume passed args match or are undefined.
+    const varname = fn.parameters[i];
+    const value = args[i] || MK_NULL();
+    scope.declareVar(varname, value, false);
+  }
+
+  // Evaluate function body
+  let result = MK_NULL();
+  for (const statement of fn.declaration.body) {
+    result = evaluate(statement, scope);
+    if (result.type === "return") {
+      return result.value;
+    }
+  }
+
+  // If no return statement, return last evaluated expression value?
+  // Usually functions return null if explicit return is missing.
+  return result;
 };
 
 export const evaluate_comparison_expression = (compExpr, env) => {
