@@ -1,44 +1,66 @@
-import fs from "fs";
+import fs from "fs/promises";
 
 async function packageFiles(inputFiles, outputFile) {
   try {
+    console.log("🚀 Machan Packager: Starting bundle...");
     const fileContents = [];
+    const externalImports = new Set();
+    let shebang = "#!/usr/bin/env node";
 
-    const exportRegex = /\bexport\b/g;
-    const importRegex = /\bimport .*?;/g;
+    for (const inputFile of inputFiles) {
+      console.log(`  - Adding ${inputFile}...`);
+      let content = await fs.readFile(inputFile, "utf-8");
 
-    await Promise.all(
-      inputFiles.map(async (inputFile) => {
-        let content = await fs.promises.readFile(inputFile, "utf-8");
+      // 1. Remove shebangs
+      content = content.replace(/^#!.*\n/, "");
 
-        content = content.replace(exportRegex, "");
+      // 2. Remove LOCAL imports (multi-line supported)
+      content = content.replace(/import\s+[\s\S]*?\s+from\s+['"]\.\.?\/.*?['"];?/g, "");
+      content = content.replace(/import\s+['"]\.\.?\/.*?['"];?/g, "");
 
-        content = content.replace(importRegex, "");
-        fileContents.push(content);
-      })
-    );
+      // 3. Extract and remove EXTERNAL imports
+      // Pattern matches: import ... from "pkg" where pkg doesn't start with .
+      const extImportRegex = /import\s+[\s\S]*?\s+from\s+['"](?!\.)([^'"]+)['"];?/g;
+      
+      let match;
+      while ((match = extImportRegex.exec(content)) !== null) {
+        externalImports.add(match[0].trim());
+      }
+      content = content.replace(extImportRegex, "");
 
-    const concatenatedContent = fileContents.join("\n");
+      // 4. Strip 'export' keywords
+      content = content.replace(/\bexport\b/g, "");
 
-    await fs.promises.writeFile(outputFile, concatenatedContent);
+      fileContents.push(`\n// --- Source: ${inputFile} ---\n${content}`);
+    }
 
-    console.log(`Files packaged successfully into ${outputFile}`);
+    const bundle = [
+      shebang,
+      Array.from(externalImports).join("\n"),
+      ...fileContents
+    ].join("\n");
+
+    await fs.writeFile(outputFile, bundle);
+
+    console.log(`✅ Success! MachanScript bundled into ${outputFile}`);
+    console.log(`📦 Ready for NPM registry.`);
   } catch (err) {
-    console.error("Error packaging files:", err);
+    console.error("❌ Packaging Failed:", err);
   }
 }
 
 const inputFiles = [
+  "./runtime/values.js",
   "./frontend/lexer.js",
   "./frontend/ast.js",
   "./frontend/parser.js",
+  "./runtime/environment.js",
   "./runtime/eval/expressions.js",
   "./runtime/eval/statements.js",
-  "./runtime/environment.js",
-  "./runtime/values.js",
   "./runtime/machan_native_functions.js",
   "./runtime/interpreter.js",
   "./main.js",
 ];
+
 const outputFile = "index.js";
 packageFiles(inputFiles, outputFile);
