@@ -111,7 +111,7 @@ export class Parser {
       case TokenType.NIRTH:
         this.eat(); // eat break kw
         return new BreakStatement();
-      case TokenType.CONTINUE:
+      case TokenType.AAVANE:
         this.eat(); // eat continue kw
         return new ContinueStatement();
       case TokenType.RETURN:
@@ -260,7 +260,13 @@ export class Parser {
     const thenBlock = this.parse_block();
 
     if (this.at().type === TokenType.ALENGI) {
-      this.eat(); // Consume the 'else' keyword
+      this.eat(); // Consume the 'alengi' keyword
+      
+      // Support 'alengi ipo' (else if)
+      if (this.at().type === TokenType.IPO) {
+         return new IfStatement(condition, thenBlock, this.parse_ipo_statement());
+      }
+      
       const elseBlock = this.parse_block();
       return new IfStatement(condition, thenBlock, elseBlock);
     }
@@ -614,6 +620,16 @@ export class Parser {
     const tk = this.at().type;
     switch (tk) {
       case TokenType.IDENTIFIER:
+      case TokenType.PARA:
+      case TokenType.VELUTHU:
+      case TokenType.CHERUTHU:
+      case TokenType.INPUT_EDUKU:
+      case TokenType.INATHE_DATE:
+      case TokenType.VAYIKU:
+      case TokenType.EZHUTHU:
+      case TokenType.RANDOM:
+      case TokenType.FACT:
+      case TokenType.ORANGU:
         return new Identifier(this.eat().value);
 
       case TokenType.NUMBER:

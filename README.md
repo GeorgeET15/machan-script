@@ -25,7 +25,8 @@ To start using MachanScript, follow these simple steps:
    - `obj . x | obj . y` : Accessing object properties.
    - `// comment` : Single-line comment.
    - `/* comment */` : Multi-line comment (New in V3.0).
-   - `nirth;` , `continue;` : Control loop execution.
+   - `nirth;` : Break out of loops.
+   - `aavane;` : Continue to next iteration.
    - `return value;` : Return from your functions.
 
 3. **Examples**:
@@ -52,14 +53,15 @@ To start using MachanScript, follow these simple steps:
 
 4. **Saving the file**:
 
-   - Save the file with `.ms` extension.
+   - Save the file with `.mc` extension.
 
 ## Native Functions
 
 MachanScript provides a variety of built-in functions to handle I/O, math, data structures, and more.
 
-### 🛠️ Core Utilities
+### Core Utilities
 - `para ( ...args ) ;` : Prints messages to the console.
+
   ```machan
   para("Hello", "Machan!");
   ```
@@ -77,8 +79,9 @@ MachanScript provides a variety of built-in functions to handle I/O, math, data 
   inathe_date(true, d);   // Saves date & time to 'd'
   ```
 
-### 📂 File Management
+### File Management
 - `vayiku ( path , varName? ) ;` : Read file content.
+
   ```machan
   vayiku("./src.ms", data);
   ```
@@ -87,7 +90,7 @@ MachanScript provides a variety of built-in functions to handle I/O, math, data 
   ezhuthu("./log.txt", "Action completed");
   ```
 
-### 📦 Array Operations
+### Array Operations
 - `array_push ( arr , val ) ;`, `array_pop ( arr ) ;`
 - `array_length ( arr ) ;`, `array_join ( arr , sep ) ;`, `array_slice ( arr , start , end ) ;`
   ```machan
@@ -97,7 +100,7 @@ MachanScript provides a variety of built-in functions to handle I/O, math, data 
   para(array_join(myArr, "-"));   // "1-2"
   ```
 
-### 🧵 String Operations
+### String Operations
 - `string_length ( str ) ;`, `string_substring ( str , start , end ) ;`
 - `string_upper ( str ) ;`, `string_lower ( str ) ;`, `string_split ( str , sep ) ;`
   ```machan
@@ -106,7 +109,7 @@ MachanScript provides a variety of built-in functions to handle I/O, math, data 
   para(string_length(msg));      // 11
   ```
 
-### 🔢 Math & Numbers
+### Math & Numbers
 - `sqrt(n)`, `power(b, e)`, `abs(n)`, `round(n)`, `floor(n)`, `ceil(n)`
 - `random ( min , max , varName? ) ;` : Random integer.
 - `fact ( n , varName? ) ;` : Factorial.
@@ -115,14 +118,14 @@ MachanScript provides a variety of built-in functions to handle I/O, math, data 
   para(random(1, 10));           // Random 1-10
   ```
 
-### 💎 Object Functions
+### Object Functions
 - `object_keys(obj)`, `object_values(obj)`, `object_has(obj, key)`
   ```machan
   ithu user = {id: 1, name: "Ali"} aanu
   para(object_keys(user));       // ["id", "name"]
   ```
 
-### 🔍 Type Checking (Malayalam)
+### Type Checking (Malayalam)
 - `number_ano(v)`, `string_ano(v)`, `array_ano(v)`, `object_ano(v)`
   ```machan
   ipo (number_ano(10)) anengi { para("It is a number"); }
@@ -150,7 +153,7 @@ MachanScript supports the following loop statements:
 
 ## Examples 😉
 
-### 🟢 Basic Usage
+### Basic Usage
 
 #### Conditional Execution ( `ipo`, `anengi`, `alengi` )
 ```machan
@@ -210,7 +213,7 @@ para(sum) ;
 
 ---
 
-### 🌟 Rich Showcase (New in V3.0)
+### Rich Showcase (New in V3.0)
 
 #### 1. Fibonacci Series (Recursion)
 ```machan
@@ -274,7 +277,7 @@ ipo (data != null) anengi {
 }
 ```
 
-#### 4. Advanced Loop Control (`nirth` & `continue`)
+#### 4. Advanced Loop Control (`nirth` & `aavane`)
 ```machan
 Machane!!
 
@@ -285,8 +288,8 @@ machane (true) aavane vare {
     para("Found it: ", n);
     nirth; // Stop the infinite loop
   }
-  n = n + 1
-  continue; // redundent but works!
+  n = n + 1;
+  aavane; // Continue to next iteration (redundant but works!)
 }
 ```
 
@@ -312,7 +315,7 @@ para("2 raised to 10 is: ", power(2, 10));
 You can run MachanScript files from the command line using the following command:
 
 ```sh
-machane filename.ms
+machane filename.mc
 ```
 
 ## VSCode Extension
@@ -321,13 +324,27 @@ The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET1
 
 ## Version History 📝
 
+### v3.1.0 (January-2026)
+
+- **User-defined functions** with `machane pani` syntax and `return` keyword
+- **Try-Catch error handling** (`machane try cheyu ... pidiku`)
+- **Logical operators** (`&&`, `||`, `!`)
+- **Comprehensive test suite** covering all language features
+- **Huge standard library upgrade**:
+  - **Array operations**: `array_push`, `array_pop`, `array_length`, `array_join`, `array_slice`
+  - **String operations**: `string_length`, `string_substring`, `string_upper`, `string_lower`, `string_split`
+  - **Object functions**: `object_keys`, `object_values`, `object_has`
+  - **Type checking**: `number_ano`, `string_ano`, `array_ano`, `object_ano`
+  - **Math functions**: `sqrt`, `power`, `abs`, `round`, `floor`, `ceil`
+- Enhanced native function support in expressions
+- Improved **else-if** (`alengi ipo`) syntax support
+- Updated Malayalam keywords (`aavane` for continue)
+- Multi-line comments support (`/* */`)
+
 ### v3.0.0 (August-2024)
 
-- New and improved CLI
-- Users can program in the CLI
+- New and improved CLI with interactive REPL
 - Fully localized Malayalam error messages
-- Added Functions, Try-Catch, and Logical Operators
-- Huge standard library upgrade (Arrays, Strings, Math)
 - Smart Bundler/Packager for deployment
 
 ### v0.1 (June-2024)

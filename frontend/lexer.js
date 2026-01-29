@@ -57,7 +57,7 @@ export const TokenType = {
   COLON: "Colon",
   DOT: "Dot",
 
-  // Keywords
+  RETURN: "return",
   MACHANE: "machane",
   ITHU: "ithu",
   AANU: "aanu",
@@ -83,12 +83,10 @@ export const TokenType = {
   FACT: "fact",
   ORANGU: "orangu",
   NIRTH: "nirth",
-  CONTINUE: "continue",
   PANI: "pani",
-  RETURN: "return",
-  TRY: "try",
-  CHEYU: "cheyu",
   PIDIKU: "pidiku",
+  CHEYU: "cheyu",
+  TRY: "try",
 
   // End of File
   EOF: "EOF",

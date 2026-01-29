@@ -46,7 +46,7 @@ export class Environment {
       return this;
     }
     if (this.parent === null) {
-      throw new Error(`Machane '${varname}' inagen oru item illa`);
+      throw new Error(`Machane '${varname}' ingane oru item illa`);
     }
     return this.parent.resolve(varname);
   }

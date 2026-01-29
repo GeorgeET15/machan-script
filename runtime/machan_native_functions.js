@@ -32,10 +32,11 @@ const para_native_function = (args, env, evaluate) => {
           output += `[${values}]`;
         }
         break;
+      case "object":
+        output += "[Object]";
+        break;
       default:
-        chalk.yellow(
-          (output += "Unsupported argument type for para function.")
-        );
+        output += `[Unsupported type: ${evaluatedArg.type}]`;
         break;
     }
   }
@@ -502,6 +503,8 @@ export const nativeFunctionRegistry = {
   random: random_number_native_function,
   fact: factorial_native_function,
   orangu: orangu_native_function,
+  input_eduku: input_eduku_native_function,
+  inathe_date: inathe_date_native_function,
   
   // Array Functions
   array_push: array_push_native,

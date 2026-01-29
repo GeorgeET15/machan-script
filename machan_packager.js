@@ -1,54 +1,5 @@
 import fs from "fs/promises";
 
-async function packageFiles(inputFiles, outputFile) {
-  try {
-    console.log("🚀 Machan Packager: Starting bundle...");
-    const fileContents = [];
-    const externalImports = new Set();
-    let shebang = "#!/usr/bin/env node";
-
-    for (const inputFile of inputFiles) {
-      console.log(`  - Adding ${inputFile}...`);
-      let content = await fs.readFile(inputFile, "utf-8");
-
-      // 1. Remove shebangs
-      content = content.replace(/^#!.*\n/, "");
-
-      // 2. Remove LOCAL imports (multi-line supported)
-      content = content.replace(/import\s+[\s\S]*?\s+from\s+['"]\.\.?\/.*?['"];?/g, "");
-      content = content.replace(/import\s+['"]\.\.?\/.*?['"];?/g, "");
-
-      // 3. Extract and remove EXTERNAL imports
-      // Pattern matches: import ... from "pkg" where pkg doesn't start with .
-      const extImportRegex = /import\s+[\s\S]*?\s+from\s+['"](?!\.)([^'"]+)['"];?/g;
-      
-      let match;
-      while ((match = extImportRegex.exec(content)) !== null) {
-        externalImports.add(match[0].trim());
-      }
-      content = content.replace(extImportRegex, "");
-
-      // 4. Strip 'export' keywords
-      content = content.replace(/\bexport\b/g, "");
-
-      fileContents.push(`\n// --- Source: ${inputFile} ---\n${content}`);
-    }
-
-    const bundle = [
-      shebang,
-      Array.from(externalImports).join("\n"),
-      ...fileContents
-    ].join("\n");
-
-    await fs.writeFile(outputFile, bundle);
-
-    console.log(`✅ Success! MachanScript bundled into ${outputFile}`);
-    console.log(`📦 Ready for NPM registry.`);
-  } catch (err) {
-    console.error("❌ Packaging Failed:", err);
-  }
-}
-
 const inputFiles = [
   "./runtime/values.js",
   "./frontend/lexer.js",
@@ -59,8 +10,50 @@ const inputFiles = [
   "./runtime/eval/statements.js",
   "./runtime/machan_native_functions.js",
   "./runtime/interpreter.js",
-  "./main.js",
+  "./main.js"
 ];
 
-const outputFile = "index.js";
-packageFiles(inputFiles, outputFile);
+async function simpleBundle() {
+  try {
+    console.log("🚀 Machan Packager: Starting simple bundle...");
+    let body = "";
+
+    for (const file of inputFiles) {
+      console.log(`  - Adding ${file}...`);
+      let content = await fs.readFile(file, "utf-8");
+
+      // 1. Remove shebangs
+      content = content.replace(/^#!.*\n/g, "");
+
+      // 2. Aggressively remove EVERY 'import' and 'export' block to avoid SyntaxErrors
+      // This regex hits multi-line blocks and single-line statements
+      content = content.replace(/import\s+[\s\S]*?from\s+['"][^'"]+['"];?/g, "");
+      content = content.replace(/import\s+['"][^'"]+['"];?/g, "");
+      
+      // Remove 'export' keyword but keep the logic (the variable/function declaration)
+      content = content.replace(/\bexport\s+default\s+/g, "");
+      content = content.replace(/\bexport\s+(const|class|let|var|function|async)\b/g, "$1");
+      
+      // Cleanup residual export blocks like 'export { ... };'
+      content = content.replace(/\bexport\s+\{[\s\S]*?\};?/g, "");
+
+      body += `\n// --- Source: ${file} ---\n${content}\n`;
+    }
+
+    const header = `#!/usr/bin/env node
+import chalk from "chalk";
+import fs from "fs/promises";
+import inquirer from "inquirer";
+import figlet from "figlet";
+import readline from "readline";
+import ps from "prompt-sync";
+`;
+
+    await fs.writeFile("index.js", header + body);
+    console.log("✅ Success! MachanScript bundled into index.js");
+  } catch (err) {
+    console.error("❌ Packaging Failed:", err);
+  }
+}
+
+simpleBundle();
