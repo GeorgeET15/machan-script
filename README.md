@@ -114,7 +114,69 @@ MachanScript supports the following loop statements:
 
 ## Examples 😉
 
-### 1. Fibonacci Series (Recursion)
+### 🟢 Basic Usage
+
+#### Conditional Execution ( `ipo`, `anengi`, `alengi` )
+```machan
+Machane!!
+ithu x = 5 aanu
+ipo ( x < 10 ) anengi {
+  para ( " x is less than 10 " ) ;
+} alengi {
+  para ( "x is greater than or equal to 10" ) ;
+}
+```
+
+#### Switch Statement ( `switch machane` )
+```machan
+Machane!!
+input_eduku ( x , "Enter a number: ") ;
+switch machane ( x ) {
+  ipo 1 anengi {
+    para ( " You selected 1 " ) ;
+  }
+  ipo 2 anengi {
+    para ( " You selected 2 " ) ;
+  }
+  onnum_alengi {
+    para ( "MachanScript" ) ;
+  }
+}
+```
+
+#### While Loop ( `machane`, `aavane`, `vare` )
+```machan
+Machane!!
+ithu a = 1 aanu
+machane ( a <= 5 ) aavane vare {
+  para ( a ) ;
+  a = a + 1
+}
+```
+
+#### For Loop ( `for`, `machane`, `enit` )
+```machan
+Machane!!
+for machane ( ithu i = 0 aanu : i < 5 : i = i + 1 ) enit {
+   para ( i ) ;
+}
+```
+
+#### Function Declaration ( `machane pani` )
+```machan
+Machane!!
+machane pani add(a, b) {
+  return a + b;
+}
+ithu sum = add(10, 20) aanu
+para(sum) ;
+```
+
+---
+
+### 🌟 Rich Showcase (New in V3.0)
+
+#### 1. Fibonacci Series (Recursion)
 ```machan
 Machane!!
 
@@ -130,7 +192,7 @@ for machane (ithu i = 0 aanu : i < 10 : i = i + 1) enit {
 }
 ```
 
-### 2. Complex Student Management (Objects & Arrays)
+#### 2. Complex Student Management (Objects & Arrays)
 ```machan
 Machane!!
 
@@ -149,13 +211,13 @@ machane pani average(marks) {
 }
 
 para("--- Student Report ---");
-for machane (ithu s = 0 aanu : s < array_length(students) : s = i + 1) enit {
+for machane (ithu s = 0 aanu : s < array_length(students) : s = s + 1) enit {
   ithu student = students[s] aanu
   para(student.name, " scored an average of: ", average(student.marks));
 }
 ```
 
-### 3. File Loader with Try-Catch (Robustness)
+#### 3. File Loader with Try-Catch (Robustness)
 ```machan
 Machane!!
 
@@ -176,7 +238,7 @@ ipo (data != null) anengi {
 }
 ```
 
-### 4. Advanced Loop Control (`nirth` & `continue`)
+#### 4. Advanced Loop Control (`nirth` & `continue`)
 ```machan
 Machane!!
 
@@ -192,7 +254,7 @@ machane (true) aavane vare {
 }
 ```
 
-### 5. Type checking and Native Math
+#### 5. Type checking and Native Math
 ```machan
 Machane!!
 
@@ -205,6 +267,7 @@ ipo (number_ano(input)) anengi {
 
 para("2 raised to 10 is: ", power(2, 10));
 ```
+
 
 
 
