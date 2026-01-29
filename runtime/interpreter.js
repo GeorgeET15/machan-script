@@ -7,6 +7,8 @@ import {
   evaluate_member_expression,
   evaluate_comparison_expression,
   evaluate_array_expression,
+  evaluate_logical_expression,
+  evaluate_unary_expression,
 } from "./eval/expressions.js";
 import {
   evaluate_program,
@@ -45,6 +47,10 @@ export const evaluate = (astNode, env) => {
       return evaluate_member_expression(astNode, env);
     case "ComparisonExpression":
       return evaluate_comparison_expression(astNode, env);
+    case "LogicalExpression":
+      return evaluate_logical_expression(astNode, env);
+    case "UnaryExpression":
+      return evaluate_unary_expression(astNode, env);
     case "NativeFunctionCall":
       return call_native_function(astNode.name, astNode.args, env);
     case "IfStatement":

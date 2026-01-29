@@ -10,7 +10,9 @@ export const NodeType = [
   "ObjectLiteral",
   "MemberExpression",
   "CallExpression",
-  "ComparisonExpression", // Added ComparisonExpression
+  "ComparisonExpression",
+  "LogicalExpression",
+  "UnaryExpression",
 ];
 
 export class Statement {
@@ -125,6 +127,20 @@ export class NativeFunctionCall extends Expression {
 export class ComparisonExpression extends BinaryExpr {
   constructor(left, right, operator) {
     super("Comparison", left, right, operator);
+  }
+}
+
+export class LogicalExpression extends BinaryExpr {
+  constructor(left, right, operator) {
+    super("LogicalExpression", left, right, operator);
+  }
+}
+
+export class UnaryExpression extends Expression {
+  constructor(operator, argument) {
+    super("UnaryExpression");
+    this.operator = operator;
+    this.argument = argument;
   }
 }
 

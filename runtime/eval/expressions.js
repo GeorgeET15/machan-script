@@ -1,6 +1,5 @@
 import { NumberVal, MK_NULL, ObjectVal, BoolVal, ArrayVal } from "../values.js";
 import { evaluate } from "../interpreter.js";
-import { Assignment } from "../../frontend/ast.js";
 import chalk from "chalk";
 
 const evaluate_binary_numeric_expression = (lhs, rhs, operator) => {
@@ -145,4 +144,53 @@ export const evaluate_comparison_expression = (compExpr, env) => {
     );
     return MK_NULL();
   }
+};
+
+export const evaluate_logical_expression = (logicExpr, env) => {
+  const lhs = evaluate(logicExpr.left, env);
+  
+  // Short-circuit evaluation for OR
+  if (logicExpr.operator === "||") {
+    if (lhs.type === "boolean" && lhs.value === true) {
+      return new BoolVal(true);
+    }
+    const rhs = evaluate(logicExpr.right, env);
+    if (rhs.type === "boolean") {
+      return new BoolVal(lhs.value || rhs.value);
+    }
+  }
+  
+  // Short-circuit evaluation for AND
+  if (logicExpr.operator === "&&") {
+    if (lhs.type === "boolean" && lhs.value === false) {
+      return new BoolVal(false);
+    }
+    const rhs = evaluate(logicExpr.right, env);
+    if (rhs.type === "boolean") {
+      return new BoolVal(lhs.value && rhs.value);
+    }
+  }
+  
+  console.log(
+    chalk.red("Machane pani kitti ") +
+      chalk.yellow("Operands in logical expression must be booleans.")
+  );
+  return MK_NULL();
+};
+
+export const evaluate_unary_expression = (unaryExpr, env) => {
+  const argument = evaluate(unaryExpr.argument, env);
+  
+  if (unaryExpr.operator === "!") {
+    if (argument.type === "boolean") {
+      return new BoolVal(!argument.value);
+    }
+    console.log(
+      chalk.red("Machane pani kitti ") +
+        chalk.yellow("Operand for NOT operator must be a boolean.")
+    );
+    return MK_NULL();
+  }
+  
+  return MK_NULL();
 };

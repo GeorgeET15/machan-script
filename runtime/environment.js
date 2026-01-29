@@ -9,7 +9,6 @@ export const setUpScope = (env) => {
 
 export class Environment {
   constructor(parentENV = null) {
-    const global = parentENV ? true : false;
     this.parent = parentENV;
     this.variables = new Map();
     this.constants = new Set();
@@ -47,7 +46,7 @@ export class Environment {
       return this;
     }
     if (this.parent === null) {
-      throw chalk.yellow(`Cannot resolve '${varname}'. It does not exist.`);
+      throw new Error(`Cannot resolve '${varname}'. It does not exist.`);
     }
     return this.parent.resolve(varname);
   }

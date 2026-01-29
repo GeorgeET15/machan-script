@@ -269,7 +269,7 @@ export const factorial_native_function = (args, env) => {
   }
 };
 
-export const orangu_native_function = (args, env) => {
+export const orangu_native_function = async (args, env) => {
   if (args.length !== 1) {
     console.error(chalk.yellow("orangu function expects exactly 1 argument."));
     return MK_NULL();
@@ -284,11 +284,8 @@ export const orangu_native_function = (args, env) => {
     return MK_NULL();
   }
 
-  // Get the current time
-  const startTime = Date.now();
-
-  // Loop until the desired delay has passed
-  while (Date.now() < startTime + milliseconds) {}
+  // Use non-blocking sleep instead of busy-wait
+  await new Promise(resolve => setTimeout(resolve, milliseconds));
 
   return MK_NULL();
 };

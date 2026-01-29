@@ -21,6 +21,8 @@ import {
   SwitchStatement,
   CaseStatement,
   DefaultStatement,
+  LogicalExpression,
+  UnaryExpression,
 } from "./ast.js";
 
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -172,7 +174,7 @@ export class Parser {
 
     const thenBlock = this.parse_block();
 
-    if (this.at().value === TokenType.ALENGI) {
+    if (this.at().type === TokenType.ALENGI) {
       this.eat(); // Consume the 'else' keyword
       const elseBlock = this.parse_block();
       return new IfStatement(condition, thenBlock, elseBlock);
@@ -248,7 +250,7 @@ export class Parser {
   }
 
   parse_assignment_expression() {
-    const left = this.parse_object_expression();
+    const left = this.parse_logical_or_expression();
     if (this.at().type == TokenType.EQUAL) {
       this.eat();
       const value = this.parse_assignment_expression();
@@ -256,6 +258,39 @@ export class Parser {
     }
 
     return left;
+  }
+
+  parse_logical_or_expression() {
+    let left = this.parse_logical_and_expression();
+
+    while (this.at().value === "||") {
+      const operator = this.eat().value;
+      const right = this.parse_logical_and_expression();
+      left = new LogicalExpression(left, right, operator);
+    }
+
+    return left;
+  }
+
+  parse_logical_and_expression() {
+    let left = this.parse_unary_expression();
+
+    while (this.at().value === "&&") {
+      const operator = this.eat().value;
+      const right = this.parse_unary_expression();
+      left = new LogicalExpression(left, right, operator);
+    }
+
+    return left;
+  }
+
+  parse_unary_expression() {
+    if (this.at().type === TokenType.NOT) {
+      const operator = this.eat().value;
+      const argument = this.parse_unary_expression();
+      return new UnaryExpression(operator, argument);
+    }
+    return this.parse_object_expression();
   }
 
   parse_object_expression() {

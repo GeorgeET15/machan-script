@@ -29,6 +29,9 @@ export const TokenType = {
   LESS_THAN_OR_EQUAL: "LessThanOrEqual",
   EQUAL_EQUAL: "EqualEqual",
   NOT_EQUAL: "NotEqual",
+  AND: "And",
+  OR: "Or",
+  NOT: "Not",
 
   // Punctuation
   LEFT_PAREN: "LeftParen",
@@ -74,12 +77,15 @@ export const TokenType = {
 
 export const tokenize = (sourceCode) => {
   const tokens = [];
-  const src = sourceCode.match(/(['"]).*?\1|\S+/g) || [];
+  // Improved regex that properly separates operators, strings, and other tokens
+  // This regex matches: strings (quoted), multi-char operators, single-char operators/punctuation, or words
+  const pattern = /(['"])(?:(?=(\\?))\2.)*?\1|&&|\|\||==|!=|<=|>=|[+\-*\/%=<>!(){}\[\];:,.]|[^\s+\-*\/%=<>!(){}\[\];:,.]+/g;
+  const src = sourceCode.match(pattern) || [];
 
   for (const word of src) {
     if (!isNaN(word)) {
       tokens.push(new Token(word, TokenType.NUMBER));
-    } else if (/^"[^"]*"$/.test(word) || /^'[^']*'$/.test(word)) {
+    } else if (/^["'].*["']$/.test(word)) {
       tokens.push(new Token(word.slice(1, -1), TokenType.STRING));
     } else if (word.toUpperCase() in TokenType) {
       tokens.push(new Token(word, TokenType[word.toUpperCase()]));
@@ -90,10 +96,6 @@ export const tokenize = (sourceCode) => {
           word === "undefined" ? TokenType.UNDEFINED : TokenType.IDENTIFIER
         )
       );
-    } else if (word.startsWith('"') && word.endsWith('"')) {
-      tokens.push(new Token(word.slice(1, -1), TokenType.STRING));
-    } else if (/^"[^"]*"$/.test(word) || /^'[^']*'$/.test(word)) {
-      tokens.push(new Token(word.slice(1, -1), TokenType.STRING));
     } else {
       const tokenType =
         {
@@ -119,6 +121,9 @@ export const tokenize = (sourceCode) => {
           ">=": TokenType.GREATER_THAN_OR_EQUAL,
           "==": TokenType.EQUAL_EQUAL,
           "!=": TokenType.NOT_EQUAL,
+          "&&": TokenType.AND,
+          "||": TokenType.OR,
+          "!": TokenType.NOT,
         }[word] || TokenType.IDENTIFIER;
 
       tokens.push(new Token(word, tokenType));
