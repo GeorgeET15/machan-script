@@ -44,6 +44,14 @@ MachanScript is a [adipoli](https://www.akshharam.com/blog-detail/malayalam-slan
 - `for machane (init : condition : step) enit { ... }` : For loop.
 - `break;` , `continue;` : Loop control.
 
+### ⚡ Operators & Math
+MachanScript supports standard math and some smart operators:
+- **String Concat**: `"Hello " + "Machan"` works naturally!
+- **Compound Assignment**: `+=`, `-=`, `*=`, `/=`, `%=`
+- **Inc/Dec**: `x++` and `x--` 
+- **Float Math**: Division always returns a float (e.g., `5 / 2` is `2.5`).
+- **Unary Minus**: Support for negative numbers like `-10`.
+
 ### Functions & Errors
 - `machane pani name(args) { ... }` : Define a function.
 - `return value;` : Return from a function.
@@ -139,3 +147,38 @@ Created by [GeorgeET15](https://georgeemmanuelthomas.dev).
 Licensed under [MIT](./LICENSE). Acknowledgement is appreciated!
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+
+---
+
+### 🏗️ Advanced Logic
+```machan
+Machane!!
+
+// Standard Boolean Logic
+ipo (true && !false) anengi {
+    para("Logic is solid!");
+}
+
+// Compound Operations
+ithu x = 10 aanu
+x += 5
+x++
+para("X is now: ", x) // 16
+```
+
+---
+
+## 🛠️ The Machan Project Structure
+If you want to look under the hood (or `vandiye check cheyan`):
+- `/frontend`: The Lexer and Parser (where tokens become thoughts).
+- `/runtime`: The Interpreter and Environment (where thoughts become action).
+- `main.js`: The heart of the CLI.
+
+## 🗺️ Roadmap / Future Goals
+We are constantly making MachanScript more *adipoli*. Next up:
+- [ ] **Line Number Tracking**: Pinpoint exactly where the "pani" happened.
+- [ ] **Import/Export**: Load files inside other files.
+- [ ] **Standard Library+**: More DOM manipulation and Web support.
+
+## 🤝 Contributing
+Feel free to fork, open issues, or submit pull requests. All Machans are welcome to contribute!
