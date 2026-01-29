@@ -56,41 +56,77 @@ To start using MachanScript, follow these simple steps:
 
 ## Native Functions
 
-MachanScript provides the following native functions:
+MachanScript provides a variety of built-in functions to handle I/O, math, data structures, and more.
 
-- `para ( message ) ;` : Prints the message to the console.
-- `input_eduku ( varName , prompt ) ;` : Prompts the user to enter a value and assigns it to the variable specified by `varName`.
-- `orangu ( milliseconds ) ;` : It will synchronously pause the execution of other operations for the specified number of milliseconds before resuming.
-- `veluthu ( arg1 , arg2...., varName ) ;` : Returns the largest. We can either pass sperate values or an array or seperate values and an array. The returned value will be stored in the last passed `varName`.
-- `cheruthu ( arg1 , arg2...., varName) ;` : Same as of `veluthu` except it returns the smallest value
-- `inathe_date ( boolVal , varName ) ;` : Returns the date, if true it also returns the time, if we pass the `varName` the returned value will be stored in the new variable created.
-- `vayiku ( file , varName ) ;` : Prints the content in the file, if we pass the `varName` the returned content will be stored in the new variable created.
-- `ezhuthu ( file , data ) ;` : Stores the data we passed to the file. We can either directly pass a string or a variable containing a string,
-- `random ( min , max , varName ) ;` : Returns a random number between the min and max range, if we pass the `varName` the returned value will be stored in the new variable created.
-- `fact ( number , varName ) ;` : Returns the factorial of the number, if we pass the `varName` the returned value will be stored in the new variable created.
+### 🛠️ Core Utilities
+- `para ( ...args ) ;` : Prints messages to the console.
+  ```machan
+  para("Hello", "Machan!");
+  ```
+- `input_eduku ( varName , prompt ) ;` : Gets user input.
+  ```machan
+  input_eduku(name, "What is your name? ");
+  ```
+- `orangu ( ms ) ;` : Pause execution (non-blocking).
+  ```machan
+  orangu(1000); // 1 second sleep
+  ```
+- `inathe_date ( includeTime? , varName? ) ;` : Get current date.
+  ```machan
+  inathe_date();          // Prints date
+  inathe_date(true, d);   // Saves date & time to 'd'
+  ```
 
-### Array Functions (New in V3.0)
-- `array_push ( arr , val ) ;` : Adds an element to the end of the array.
-- `array_pop ( arr ) ;` : Removes and returns the last element.
-- `array_length ( arr ) ;` : Returns the number of elements in the array.
-- `array_join ( arr , separator ) ;` : Joins array elements into a string.
-- `array_slice ( arr , start , end ) ;` : Returns a portion of the array.
+### 📂 File Management
+- `vayiku ( path , varName? ) ;` : Read file content.
+  ```machan
+  vayiku("./src.ms", data);
+  ```
+- `ezhuthu ( path , data ) ;` : Write to a file.
+  ```machan
+  ezhuthu("./log.txt", "Action completed");
+  ```
 
-### String Functions (New in V3.0)
-- `string_length ( str ) ;` : Returns the character count.
-- `string_substring ( str , start , end ) ;` : Extracts parts of the string.
-- `string_upper ( str ) ;` : Converts string to uppercase.
-- `string_lower ( str ) ;` : Converts string to lowercase.
-- `string_split ( str , separator ) ;` : Splits string into an array.
+### 📦 Array Operations
+- `array_push ( arr , val ) ;`, `array_pop ( arr ) ;`
+- `array_length ( arr ) ;`, `array_join ( arr , sep ) ;`, `array_slice ( arr , start , end ) ;`
+  ```machan
+  ithu myArr = [1, 2] aanu
+  array_push(myArr, 3);          // [1, 2, 3]
+  ithu last = array_pop(myArr) aanu // 3
+  para(array_join(myArr, "-"));   // "1-2"
+  ```
 
-### Math Functions (New in V3.0)
-- `sqrt ( n ) ;`, `power ( base , exp ) ;`, `abs ( n ) ;`, `round ( n ) ;`, `floor ( n ) ;`, `ceil ( n ) ;`
+### 🧵 String Operations
+- `string_length ( str ) ;`, `string_substring ( str , start , end ) ;`
+- `string_upper ( str ) ;`, `string_lower ( str ) ;`, `string_split ( str , sep ) ;`
+  ```machan
+  ithu msg = "Hello World" aanu
+  para(string_upper(msg));       // "HELLO WORLD"
+  para(string_length(msg));      // 11
+  ```
 
-### Type Checking (Malayalam)
-- `number_ano ( val ) ;` : Is it a number?
-- `string_ano ( val ) ;` : Is it a string?
-- `array_ano ( val ) ;` : Is it an array?
-- `object_ano ( val ) ;` : Is it an object?
+### 🔢 Math & Numbers
+- `sqrt(n)`, `power(b, e)`, `abs(n)`, `round(n)`, `floor(n)`, `ceil(n)`
+- `random ( min , max , varName? ) ;` : Random integer.
+- `fact ( n , varName? ) ;` : Factorial.
+  ```machan
+  para(sqrt(16));                // 4
+  para(random(1, 10));           // Random 1-10
+  ```
+
+### 💎 Object Functions
+- `object_keys(obj)`, `object_values(obj)`, `object_has(obj, key)`
+  ```machan
+  ithu user = {id: 1, name: "Ali"} aanu
+  para(object_keys(user));       // ["id", "name"]
+  ```
+
+### 🔍 Type Checking (Malayalam)
+- `number_ano(v)`, `string_ano(v)`, `array_ano(v)`, `object_ano(v)`
+  ```machan
+  ipo (number_ano(10)) anengi { para("It is a number"); }
+  ```
 
 ## Control Statements
 
