@@ -324,7 +324,7 @@ The [MachanScript](https://marketplace.visualstudio.com/items?itemName=GeorgeET1
 
 ## Version History 📝
 
-### v3.1.0 (January-2026)
+### v3.1.1 (January-2026)
 
 - **User-defined functions** with `machane pani` syntax and `return` keyword
 - **Try-Catch error handling** (`machane try cheyu ... pidiku`)
